@@ -74,7 +74,7 @@ const SalesModule = (() => {
         <td>${s.doctor_prescription_id ? `<span class="badge badge-rx">${s.doctor_prescription_id}</span>` : '<span class="text-muted">None (OTC)</span>'}</td>
         <td><span class="badge badge-info">${s.payment_method}</span></td>
         <td>${s.item_count} items (${s.total_units} units)</td>
-        <td><strong>$${s.total_amount.toFixed(2)}</strong> ${s.discount_percent > 0 ? `<small class="text-success">(-${s.discount_percent}%)</small>` : ''}</td>
+        <td><strong>Rs. ${s.total_amount.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong> ${s.discount_percent > 0 ? `<small class="text-success">(-${s.discount_percent}%)</small>` : ''}</td>
         <td class="text-right">
           <button class="btn btn-sm btn-outline" onclick="SalesModule.viewReceipt(${s.id})">
             <i class="fa-solid fa-file-invoice-dollar"></i> View Receipt

@@ -234,7 +234,7 @@ const MedicinesModule = (() => {
           </td>
           <td>${med.category_name || '<span class="text-muted">Uncategorized</span>'}</td>
           <td>${med.dosage_form} (${med.strength})</td>
-          <td><strong>$${med.unit_price.toFixed(2)}</strong></td>
+          <td><strong>Rs. ${med.unit_price.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></td>
           <td>${stockBadge}</td>
           <td>${expiryBadge}</td>
           <td>${rxBadge}</td>
@@ -522,11 +522,11 @@ const MedicinesModule = (() => {
           </div>
           <div class="detail-item">
             <span class="detail-item-label">Unit Selling Price</span>
-            <span class="detail-item-val text-primary">$${med.unit_price.toFixed(2)}</span>
+            <span class="detail-item-val text-primary">Rs. ${med.unit_price.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
           <div class="detail-item">
             <span class="detail-item-label">Acquisition Cost</span>
-            <span class="detail-item-val">$${med.cost_price.toFixed(2)}</span>
+            <span class="detail-item-val">Rs. ${med.cost_price.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
           <div class="detail-item">
             <span class="detail-item-label">Current Stock on Hand</span>
@@ -666,7 +666,7 @@ const MedicinesModule = (() => {
       return;
     }
 
-    const headers = ['SKU', 'Brand Name', 'Generic Name', 'Category', 'Dosage Form', 'Strength', 'Cost Price', 'Selling Price', 'Stock Level', 'Min Threshold', 'Batch', 'Expiry Date', 'Prescription Required'];
+    const headers = ['SKU', 'Brand Name', 'Generic Name', 'Category', 'Dosage Form', 'Strength', 'Cost Price (Rs.)', 'Selling Price (Rs.)', 'Stock Level', 'Min Threshold', 'Batch', 'Expiry Date', 'Prescription Required'];
 
     const rows = currentMedicines.map(m => [
       `"${m.sku}"`,

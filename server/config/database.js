@@ -133,10 +133,10 @@ function seedInitialData() {
   `);
 
   const suppliers = [
-    ['Apex Pharmaceuticals Ltd', 'Dr. Sarah Connor', '+1-555-0142', 'orders@apexpharma.com', '124 Industrial Parkway, Chicago, IL'],
-    ['BioHealth Distributors', 'Marcus Vance', '+1-555-0198', 'mvance@biohealth.org', '78 Health Science Blvd, Boston, MA'],
-    ['MedLine Global Supplies', 'Elena Rostova', '+1-555-0233', 'sales@medlineglobal.com', '500 Logistics Way, Atlanta, GA'],
-    ['Zenith Therapeutics', 'David Kim', '+1-555-0371', 'dkim@zeniththera.com', '32 Innovation Court, San Diego, CA']
+    ['State Pharmaceuticals Corporation (SPC)', 'Dr. Kamal Perera', '+94-11-232-0356', 'orders@spc.lk', '75 Sir Baron Jayathilaka Mawatha, Colombo 01'],
+    ['Hemas Pharmaceuticals (Pvt) Ltd', 'Nimali Fernando', '+94-11-473-1000', 'pharma@hemas.com', 'Hemas House, 75 Braybrooke Place, Colombo 02'],
+    ['Morison Ltd (Hemas Group)', 'Rohan Jayasuriya', '+94-11-282-4500', 'supplies@morison.lk', '620 Biyagama Road, Pethiyagoda, Kelaniya'],
+    ['Emerchemie NB (Ceylon) Ltd', 'Suresh Mendis', '+94-11-472-7900', 'info@emerchemie.lk', '108 Barnes Place, Colombo 07']
   ];
 
   const supMap = {};
@@ -175,11 +175,11 @@ function seedInitialData() {
       name: 'Amoxicillin Trihydrate',
       generic_name: 'Amoxicillin',
       category_id: catMap['Antibiotics & Antimicrobials'],
-      supplier_id: supMap['Apex Pharmaceuticals Ltd'],
+      supplier_id: supMap['State Pharmaceuticals Corporation (SPC)'],
       dosage_form: 'Capsule',
       strength: '500mg',
-      cost_price: 12.00,
-      unit_price: 18.50,
+      cost_price: 320.00,
+      unit_price: 480.00,
       quantity_in_stock: 120,
       min_stock_threshold: 25,
       expiry_date: formatIsoDate(safeDate1),
@@ -189,15 +189,15 @@ function seedInitialData() {
     },
     {
       sku: 'MED-1002',
-      name: 'Paracetamol Extra',
+      name: 'Paracetamol Extra (Panadol)',
       generic_name: 'Acetaminophen',
       category_id: catMap['Analgesics & Pain Relief'],
-      supplier_id: supMap['BioHealth Distributors'],
+      supplier_id: supMap['Hemas Pharmaceuticals (Pvt) Ltd'],
       dosage_form: 'Tablet',
-      strength: '650mg',
-      cost_price: 3.50,
-      unit_price: 6.00,
-      quantity_in_stock: 350,
+      strength: '500mg',
+      cost_price: 35.00,
+      unit_price: 60.00,
+      quantity_in_stock: 450,
       min_stock_threshold: 50,
       expiry_date: formatIsoDate(safeDate2),
       batch_number: 'PCM-8841-A',
@@ -209,28 +209,28 @@ function seedInitialData() {
       name: 'Ibuprofen Rapid Release',
       generic_name: 'Ibuprofen',
       category_id: catMap['Analgesics & Pain Relief'],
-      supplier_id: supMap['BioHealth Distributors'],
+      supplier_id: supMap['Morison Ltd (Hemas Group)'],
       dosage_form: 'Tablet',
       strength: '400mg',
-      cost_price: 4.20,
-      unit_price: 8.00,
+      cost_price: 85.00,
+      unit_price: 140.00,
       quantity_in_stock: 18, // Low stock! Below 20
       min_stock_threshold: 25,
       expiry_date: formatIsoDate(safeDate1),
       batch_number: 'IBU-9901-C',
       requires_prescription: 0,
-      description: 'Non-steroidal anti-inflammatory drug (NSAID) for headache and muscular pain.'
+      description: 'Non-steroidal anti-inflammatory drug (NSAID) for muscular and joint pain.'
     },
     {
       sku: 'MED-1004',
       name: 'Metformin Hydrochloride',
       generic_name: 'Metformin',
       category_id: catMap['Endocrine & Diabetes'],
-      supplier_id: supMap['Zenith Therapeutics'],
+      supplier_id: supMap['State Pharmaceuticals Corporation (SPC)'],
       dosage_form: 'Tablet',
       strength: '850mg',
-      cost_price: 8.50,
-      unit_price: 14.00,
+      cost_price: 150.00,
+      unit_price: 250.00,
       quantity_in_stock: 85,
       min_stock_threshold: 20,
       expiry_date: formatIsoDate(safeDate2),
@@ -243,136 +243,136 @@ function seedInitialData() {
       name: 'Amlodipine Besylate',
       generic_name: 'Amlodipine',
       category_id: catMap['Cardiovascular & Hypertension'],
-      supplier_id: supMap['Apex Pharmaceuticals Ltd'],
+      supplier_id: supMap['Emerchemie NB (Ceylon) Ltd'],
       dosage_form: 'Tablet',
       strength: '5mg',
-      cost_price: 6.00,
-      unit_price: 11.50,
+      cost_price: 120.00,
+      unit_price: 210.00,
       quantity_in_stock: 6, // Critical Low stock!
       min_stock_threshold: 20,
       expiry_date: formatIsoDate(nearExpiryDate1), // Near expiry!
       batch_number: 'AML-4412-X',
       requires_prescription: 1,
-      description: 'Calcium channel blocker used to treat high blood pressure and coronary artery disease.'
+      description: 'Calcium channel blocker used to treat high blood pressure and angina.'
     },
     {
       sku: 'MED-1006',
-      name: 'Atorvastatin Calcium',
+      name: 'Atorvastatin Calcium (Lipitor)',
       generic_name: 'Atorvastatin',
       category_id: catMap['Cardiovascular & Hypertension'],
-      supplier_id: supMap['Zenith Therapeutics'],
+      supplier_id: supMap['Emerchemie NB (Ceylon) Ltd'],
       dosage_form: 'Tablet',
       strength: '20mg',
-      cost_price: 14.00,
-      unit_price: 22.00,
+      cost_price: 280.00,
+      unit_price: 440.00,
       quantity_in_stock: 65,
       min_stock_threshold: 15,
       expiry_date: formatIsoDate(safeDate1),
       batch_number: 'ATO-7731-B',
       requires_prescription: 1,
-      description: 'Statin medication to prevent cardiovascular disease and manage abnormal lipid levels.'
+      description: 'Statin medication to manage high cholesterol and prevent heart disease.'
     },
     {
       sku: 'MED-1007',
       name: 'Omeprazole Delayed-Release',
       generic_name: 'Omeprazole',
       category_id: catMap['Gastrointestinal'],
-      supplier_id: supMap['MedLine Global Supplies'],
+      supplier_id: supMap['Morison Ltd (Hemas Group)'],
       dosage_form: 'Capsule',
       strength: '20mg',
-      cost_price: 9.00,
-      unit_price: 15.50,
+      cost_price: 180.00,
+      unit_price: 310.00,
       quantity_in_stock: 140,
       min_stock_threshold: 30,
       expiry_date: formatIsoDate(safeDate2),
       batch_number: 'OMP-1102-K',
       requires_prescription: 0,
-      description: 'Proton pump inhibitor treating gastroesophageal reflux disease (GERD) and stomach ulcers.'
+      description: 'Proton pump inhibitor treating gastritis, acid reflux, and peptic ulcers.'
     },
     {
       sku: 'MED-1008',
       name: 'Salbutamol Inhaler (Ventolin)',
       generic_name: 'Albuterol Sulfate',
       category_id: catMap['Respiratory & Allergy'],
-      supplier_id: supMap['MedLine Global Supplies'],
+      supplier_id: supMap['Hemas Pharmaceuticals (Pvt) Ltd'],
       dosage_form: 'Inhaler',
       strength: '100mcg/dose',
-      cost_price: 18.00,
-      unit_price: 28.00,
+      cost_price: 950.00,
+      unit_price: 1450.00,
       quantity_in_stock: 45,
       min_stock_threshold: 15,
       expiry_date: formatIsoDate(safeDate1),
       batch_number: 'SLB-5530-V',
       requires_prescription: 1,
-      description: 'Fast-acting bronchodilator for asthma bronchospasm relief and COPD.'
+      description: 'Fast-acting bronchodilator for asthma bronchospasm and COPD.'
     },
     {
       sku: 'MED-1009',
       name: 'Cetirizine Hydrochloride',
       generic_name: 'Cetirizine',
       category_id: catMap['Respiratory & Allergy'],
-      supplier_id: supMap['BioHealth Distributors'],
+      supplier_id: supMap['Hemas Pharmaceuticals (Pvt) Ltd'],
       dosage_form: 'Tablet',
       strength: '10mg',
-      cost_price: 5.00,
-      unit_price: 9.50,
+      cost_price: 65.00,
+      unit_price: 110.00,
       quantity_in_stock: 210,
       min_stock_threshold: 35,
       expiry_date: formatIsoDate(nearExpiryDate2), // Near expiry
       batch_number: 'CTZ-9021-M',
       requires_prescription: 0,
-      description: 'Second-generation antihistamine used for hay fever, allergies, and urticaria.'
+      description: 'Antihistamine used for allergic rhinitis, sneezing, and skin allergy.'
     },
     {
       sku: 'MED-1010',
       name: 'Azithromycin Monohydrate',
       generic_name: 'Azithromycin',
       category_id: catMap['Antibiotics & Antimicrobials'],
-      supplier_id: supMap['Apex Pharmaceuticals Ltd'],
+      supplier_id: supMap['State Pharmaceuticals Corporation (SPC)'],
       dosage_form: 'Tablet',
       strength: '500mg',
-      cost_price: 16.50,
-      unit_price: 26.00,
+      cost_price: 420.00,
+      unit_price: 650.00,
       quantity_in_stock: 0, // Out of stock!
       min_stock_threshold: 15,
       expiry_date: formatIsoDate(safeDate1),
       batch_number: 'AZM-3032-Q',
       requires_prescription: 1,
-      description: 'Macrolide antibiotic commonly prescribed for respiratory and ear infections.'
+      description: 'Macrolide antibiotic commonly prescribed for respiratory infections.'
     },
     {
       sku: 'MED-1011',
       name: 'Vitamin D3 Cholecalciferol',
       generic_name: 'Cholecalciferol',
       category_id: catMap['Vitamins & Supplements'],
-      supplier_id: supMap['BioHealth Distributors'],
+      supplier_id: supMap['Morison Ltd (Hemas Group)'],
       dosage_form: 'Softgel',
       strength: '50,000 IU',
-      cost_price: 7.20,
-      unit_price: 13.00,
+      cost_price: 380.00,
+      unit_price: 580.00,
       quantity_in_stock: 95,
       min_stock_threshold: 20,
       expiry_date: formatIsoDate(safeDate2),
       batch_number: 'VTD-8088-S',
       requires_prescription: 0,
-      description: 'Essential fat-soluble vitamin crucial for bone health and calcium absorption.'
+      description: 'Essential vitamin for bone mineralization and immune health.'
     },
     {
       sku: 'MED-1012',
-      name: 'Ciprofloxacin Drops',
+      name: 'Ciprofloxacin Eye/Ear Drops',
       generic_name: 'Ciprofloxacin 0.3%',
       category_id: catMap['Antibiotics & Antimicrobials'],
-      supplier_id: supMap['Apex Pharmaceuticals Ltd'],
+      supplier_id: supMap['State Pharmaceuticals Corporation (SPC)'],
       dosage_form: 'Drops',
       strength: '5ml',
-      cost_price: 8.00,
-      unit_price: 14.50,
+      cost_price: 240.00,
+      unit_price: 390.00,
       quantity_in_stock: 12,
       min_stock_threshold: 10,
-      expiry_date: formatIsoDate(expiredDate1), // Expired drug for testing filtering/alerts!
+      expiry_date: formatIsoDate(expiredDate1), // Expired drug for alert test!
       batch_number: 'CIP-1288-E',
       requires_prescription: 1,
-      description: 'Fluoroquinolone antibiotic ophthalmic/otic solution for ocular or ear infections.'
+      description: 'Antibiotic drops for bacterial eye or ear infections.'
     }
   ];
 
@@ -383,7 +383,7 @@ function seedInitialData() {
   });
   medInsertTx(medicinesData);
 
-  // Seed sample past sales
+  // Seed sample past sales in Sri Lankan Rupees
   const insertSale = db.prepare(`
     INSERT INTO sales (invoice_number, customer_name, customer_phone, doctor_prescription_id, subtotal, discount_percent, total_amount, payment_method, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -396,19 +396,19 @@ function seedInitialData() {
 
   const seedSalesTx = db.transaction(() => {
     // Sale 1
-    const s1 = insertSale.run('INV-20261028-001', 'John Doe', '+1-555-8821', 'RX-99120', 37.00, 5, 35.15, 'Card', '2026-10-28 14:22:00');
-    insertSaleItem.run(s1.lastInsertRowid, 1, 2, 18.50, 37.00);
+    const s1 = insertSale.run('INV-20261028-001', 'Sunil Perera', '+94-77-123-4567', 'RX-SL-9912', 960.00, 5, 912.00, 'Card', '2026-10-28 14:22:00');
+    insertSaleItem.run(s1.lastInsertRowid, 1, 2, 480.00, 960.00);
 
     // Sale 2
-    const s2 = insertSale.run('INV-20261029-002', 'Sarah Jenkins', '+1-555-9014', null, 25.50, 0, 25.50, 'Cash', '2026-10-29 10:15:00');
-    insertSaleItem.run(s2.lastInsertRowid, 2, 1, 6.00, 6.00);
-    insertSaleItem.run(s2.lastInsertRowid, 9, 1, 9.50, 9.50);
-    insertSaleItem.run(s2.lastInsertRowid, 3, 1, 8.00, 8.00);
+    const s2 = insertSale.run('INV-20261029-002', 'Anoma Wickramasinghe', '+94-71-456-7890', null, 310.00, 0, 310.00, 'Cash', '2026-10-29 10:15:00');
+    insertSaleItem.run(s2.lastInsertRowid, 2, 1, 60.00, 60.00);
+    insertSaleItem.run(s2.lastInsertRowid, 9, 1, 110.00, 110.00);
+    insertSaleItem.run(s2.lastInsertRowid, 3, 1, 140.00, 140.00);
 
     // Sale 3
-    const s3 = insertSale.run('INV-20261030-003', 'Robert Miller', '+1-555-3419', 'RX-44812', 50.00, 10, 45.00, 'Online', '2026-10-30 09:40:00');
-    insertSaleItem.run(s3.lastInsertRowid, 6, 1, 22.00, 22.00);
-    insertSaleItem.run(s3.lastInsertRowid, 8, 1, 28.00, 28.00);
+    const s3 = insertSale.run('INV-20261030-003', 'Dr. Dinesh Silva', '+94-76-889-0123', 'RX-SL-4481', 1890.00, 10, 1701.00, 'Online', '2026-10-30 09:40:00');
+    insertSaleItem.run(s3.lastInsertRowid, 6, 1, 440.00, 440.00);
+    insertSaleItem.run(s3.lastInsertRowid, 8, 1, 1450.00, 1450.00);
   });
   seedSalesTx();
 

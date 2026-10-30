@@ -109,7 +109,7 @@ const PosModule = (() => {
             <div class="pos-item-generic">${med.dosage_form} • ${med.strength}</div>
           </div>
           <div class="pos-item-footer">
-            <span class="pos-item-price">$${med.unit_price.toFixed(2)}</span>
+            <span class="pos-item-price">Rs. ${med.unit_price.toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             <span class="pos-item-stock-tag ${isOutOfStock ? 'text-danger' : ''}">
               ${isOutOfStock ? 'Out of stock' : `${med.quantity_in_stock} in stock`}
             </span>
@@ -211,7 +211,7 @@ const PosModule = (() => {
         <div class="cart-row">
           <div class="cart-item-info">
             <div class="cart-item-title">${med.name} ${med.requires_prescription ? '<span class="badge badge-rx" style="padding:1px 4px; font-size:9px;">Rx</span>' : ''}</div>
-            <div class="cart-item-meta">$${med.unit_price.toFixed(2)} each</div>
+            <div class="cart-item-meta">Rs. ${med.unit_price.toFixed(2)} each</div>
           </div>
           <div class="cart-qty-controls">
             <button class="qty-btn" onclick="PosModule.updateItemQuantity(${med.id}, -1)">
@@ -222,7 +222,7 @@ const PosModule = (() => {
               <i class="fa-solid fa-plus"></i>
             </button>
           </div>
-          <div class="cart-item-total">$${subtotal.toFixed(2)}</div>
+          <div class="cart-item-total">Rs. ${subtotal.toFixed(2)}</div>
           <button class="cart-item-remove" onclick="PosModule.removeFromCart(${med.id})" title="Remove item">
             <i class="fa-solid fa-xmark"></i>
           </button>
@@ -247,8 +247,8 @@ const PosModule = (() => {
     const discountAmount = (subtotal * discountPct) / 100;
     const grandTotal = Math.max(0, subtotal - discountAmount);
 
-    document.getElementById('posSubtotal').textContent = `$${subtotal.toFixed(2)}`;
-    document.getElementById('posGrandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    document.getElementById('posSubtotal').textContent = `Rs. ${subtotal.toFixed(2)}`;
+    document.getElementById('posGrandTotal').textContent = `Rs. ${grandTotal.toFixed(2)}`;
 
     return { subtotal, discountPct, discountAmount, grandTotal };
   }
@@ -327,8 +327,8 @@ const PosModule = (() => {
         <div class="receipt-header">
           <div class="receipt-logo">🏥 PHARMACARE PRO</div>
           <div>Licensed Community Pharmacy</div>
-          <div>100 Health Science Avenue, City</div>
-          <div>Phone: +1 (555) 0199 • Tax ID: PH-992144</div>
+          <div>120 Galle Road, Colombo 03, Sri Lanka</div>
+          <div>Phone: +94 (11) 258 9900 • SLMC Reg: PH-2026-LK</div>
           <div style="margin-top: 8px;"><strong>DISPENSATION RECEIPT / INVOICE</strong></div>
         </div>
 
@@ -349,8 +349,8 @@ const PosModule = (() => {
             <tr>
               <th>Item Description</th>
               <th style="text-align:center;">Qty</th>
-              <th style="text-align:right;">Price</th>
-              <th style="text-align:right;">Amount</th>
+              <th style="text-align:right;">Price (Rs.)</th>
+              <th style="text-align:right;">Amount (Rs.)</th>
             </tr>
           </thead>
           <tbody>
@@ -358,8 +358,8 @@ const PosModule = (() => {
               <tr>
                 <td>${item.name}</td>
                 <td style="text-align:center;">${item.quantity}</td>
-                <td style="text-align:right;">$${item.unit_price.toFixed(2)}</td>
-                <td style="text-align:right;">$${item.subtotal.toFixed(2)}</td>
+                <td style="text-align:right;">Rs. ${item.unit_price.toFixed(2)}</td>
+                <td style="text-align:right;">Rs. ${item.subtotal.toFixed(2)}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -368,17 +368,17 @@ const PosModule = (() => {
         <div class="receipt-totals">
           <div style="display:flex; justify-content:space-between; margin-bottom: 4px;">
             <span>Subtotal:</span>
-            <span>$${saleData.subtotal.toFixed(2)}</span>
+            <span>Rs. ${saleData.subtotal.toFixed(2)}</span>
           </div>
           ${saleData.discount_percent > 0 ? `
             <div style="display:flex; justify-content:space-between; margin-bottom: 4px; color: green;">
               <span>Discount (${saleData.discount_percent}%):</span>
-              <span>-$${((saleData.subtotal * saleData.discount_percent) / 100).toFixed(2)}</span>
+              <span>-Rs. ${((saleData.subtotal * saleData.discount_percent) / 100).toFixed(2)}</span>
             </div>
           ` : ''}
           <div style="display:flex; justify-content:space-between; font-size: 15px; font-weight: 800; border-top: 1px solid #000; padding-top: 6px; margin-top: 6px;">
             <span>TOTAL PAID:</span>
-            <span>$${saleData.total_amount.toFixed(2)}</span>
+            <span>Rs. ${saleData.total_amount.toFixed(2)}</span>
           </div>
         </div>
 

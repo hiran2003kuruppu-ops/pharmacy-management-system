@@ -24,8 +24,8 @@ const DashboardModule = (() => {
       document.getElementById('kpiTotalMedicines').textContent = inventory.total_medicines || 0;
       document.getElementById('kpiTotalUnits').textContent = `${(inventory.total_units || 0).toLocaleString()} units in warehouse`;
 
-      document.getElementById('kpiInventoryValue').textContent = `$${(inventory.total_retail_value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-      document.getElementById('kpiInventoryCost').textContent = `Cost: $${(inventory.total_cost_value || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('kpiInventoryValue').textContent = `Rs. ${(inventory.total_retail_value || 0).toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('kpiInventoryCost').textContent = `Cost: Rs. ${(inventory.total_cost_value || 0).toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
       document.getElementById('kpiLowStock').textContent = inventory.low_stock_count || 0;
       document.getElementById('kpiOutOfStock').textContent = inventory.out_of_stock_count || 0;
@@ -34,7 +34,7 @@ const DashboardModule = (() => {
       document.getElementById('kpiExpiredCount').textContent = totalAlertExpiry;
       document.getElementById('kpiNearExpiryHint').textContent = `${inventory.near_expiry_count || 0} expiring within 30 days (${inventory.expired_count || 0} expired)`;
 
-      document.getElementById('kpiTodayRevenue').textContent = `$${(sales.today_revenue || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('kpiTodayRevenue').textContent = `Rs. ${(sales.today_revenue || 0).toLocaleString('en-LK', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       document.getElementById('kpiTodayOrders').textContent = `${sales.today_orders || 0} sales recorded today`;
 
       // 2. Render Charts
@@ -120,7 +120,7 @@ const DashboardModule = (() => {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Revenue ($)',
+          label: 'Revenue (Rs.)',
           data: totals,
           borderColor: '#10b981',
           backgroundColor: 'rgba(16, 185, 129, 0.12)',
@@ -140,7 +140,7 @@ const DashboardModule = (() => {
           y: {
             beginAtZero: true,
             ticks: {
-              callback: value => `$${value}`,
+              callback: value => `Rs. ${value}`,
               font: { family: 'Inter', size: 11 },
               color: document.documentElement.getAttribute('data-theme') === 'dark' ? '#94a3b8' : '#64748b'
             },

@@ -148,11 +148,11 @@
             </div>
 
             <div class="metric-card card-green">
-              <div class="metric-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+              <div class="metric-icon"><i class="fa-solid fa-coins"></i></div>
               <div class="metric-data">
                 <span class="metric-label">Inventory Retail Value</span>
-                <h3 class="metric-value" id="kpiInventoryValue">$0.00</h3>
-                <span class="metric-hint" id="kpiInventoryCost">Cost: $0.00</span>
+                <h3 class="metric-value" id="kpiInventoryValue">Rs. 0.00</h3>
+                <span class="metric-hint" id="kpiInventoryCost">Cost: Rs. 0.00</span>
               </div>
             </div>
 
@@ -187,7 +187,7 @@
               <div class="metric-icon"><i class="fa-solid fa-receipt"></i></div>
               <div class="metric-data">
                 <span class="metric-label">Today's Revenue</span>
-                <h3 class="metric-value" id="kpiTodayRevenue">$0.00</h3>
+                <h3 class="metric-value" id="kpiTodayRevenue">Rs. 0.00</h3>
                 <span class="metric-hint" id="kpiTodayOrders">0 sales recorded today</span>
               </div>
             </div>
@@ -448,7 +448,7 @@
                 <div class="pos-bill-summary">
                   <div class="bill-row">
                     <span>Subtotal:</span>
-                    <span id="posSubtotal">$0.00</span>
+                    <span id="posSubtotal">Rs. 0.00</span>
                   </div>
                   <div class="bill-row">
                     <span>Discount (%):</span>
@@ -468,7 +468,7 @@
                   </div>
                   <div class="bill-row total-row">
                     <span>Grand Total:</span>
-                    <span id="posGrandTotal">$0.00</span>
+                    <span id="posGrandTotal">Rs. 0.00</span>
                   </div>
 
                   <button class="btn btn-primary btn-block btn-lg mt-3" id="posCheckoutBtn" disabled>
@@ -732,12 +732,12 @@
           <div class="form-section-header mt-4">Pricing & Inventory Control</div>
           <div class="form-grid-4">
             <div class="form-group">
-              <label class="form-label required" for="medFormCostPrice">Cost Price ($)</label>
+              <label class="form-label required" for="medFormCostPrice">Cost Price (Rs.)</label>
               <input type="number" id="medFormCostPrice" class="form-control" step="0.01" min="0" placeholder="0.00" required>
               <span class="field-error" id="err_cost_price"></span>
             </div>
             <div class="form-group">
-              <label class="form-label required" for="medFormUnitPrice">Selling Price ($)</label>
+              <label class="form-label required" for="medFormUnitPrice">Selling Price (Rs.)</label>
               <input type="number" id="medFormUnitPrice" class="form-control" step="0.01" min="0" placeholder="0.00" required>
               <span class="field-error" id="err_unit_price"></span>
             </div>

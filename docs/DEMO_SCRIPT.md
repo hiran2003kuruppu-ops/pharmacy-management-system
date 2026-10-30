@@ -42,14 +42,14 @@
 > Next, let's demonstrate the **Create** operation. I'll click **'Add Medicine'**. 
 > The modal form features full client and server-side validation. If I attempt to enter a selling price lower than the cost price, the system immediately flags the error.
 > 
-> Let's add a valid new medicine: SKU `MED-8850`, Brand Name *'Cefixime Oral Suspension'*, Generic *'Cefixime'*, Category *'Antibiotics'*, Dosage *'Syrup'*, Strength *'100mg/5ml'*, Batch `CFX-2026-A`, Cost `$8.00`, Selling `$14.00`, and initial quantity of 50 units.
+> Let's add a valid new medicine: SKU `MED-8850`, Brand Name *'Cefixime Oral Suspension'*, Generic *'Cefixime'*, Category *'Antibiotics'*, Dosage *'Syrup'*, Strength *'100mg/5ml'*, Batch `CFX-2026-A`, Cost `Rs. 350.00`, Selling `Rs. 520.00`, and initial quantity of 50 units.
 > 
 > Upon saving, a success toast notification appears, the database record is created, and it appears immediately in the table."
 
 ---
 
 #### **[1:45 - 2:45] 3. Details, Update, Stock Adjustment & Safe Deletion**
-> "For the **Update** operation, we can click the edit icon on any medicine. The form pre-populates current values. Let's adjust the selling price from `$14.00` to `$15.50` and save. The record updates persistently in the SQLite database.
+> "For the **Update** operation, we can click the edit icon on any medicine. The form pre-populates current values. Let's adjust the selling price from `Rs. 520.00` to `Rs. 550.00` and save. The record updates persistently in the SQLite database.
 > 
 > We also have a dedicated **Stock Adjustment** modal for quick restocking or recording damaged units, which maintains an audit log.
 > 

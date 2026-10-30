@@ -231,8 +231,8 @@ The POS module allows pharmacy technicians to process sales efficiently:
 
 | Test Case ID | Test Description | Input Data | Expected Output | Actual Result | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **TC-01** | Create medicine with valid data | SKU: `MED-9999`, Unit Price: `$24.50`, Stock: 40 | Record created in DB, 201 Created status, toast notification | Successfully created and shown in table | **PASS** |
-| **TC-02** | Create medicine with selling price < cost price | Cost: `$20.00`, Selling: `$15.00` | Rejected with 400 Bad Request, message: "Selling price cannot be less than cost price" | Blocked by client & server validation | **PASS** |
+| **TC-01** | Create medicine with valid data | SKU: `MED-9999`, Unit Price: `Rs. 650.00`, Stock: 40 | Record created in DB, 201 Created status, toast notification | Successfully created and shown in table | **PASS** |
+| **TC-02** | Create medicine with selling price < cost price | Cost: `Rs. 500.00`, Selling: `Rs. 400.00` | Rejected with 400 Bad Request, message: "Selling price cannot be less than cost price" | Blocked by client & server validation | **PASS** |
 | **TC-03** | Search filtering by keyword | Query: `"Amox"` | Table filters to Amoxicillin records | Instant filtering displayed | **PASS** |
 | **TC-04** | Filter by Expired status | Filter: `expired` | Table displays only drugs with `expiry_date < current_date` | Accurately lists expired items | **PASS** |
 | **TC-05** | Update medicine stock | Add 20 units via Stock Modal | Stock count updates, new row in `stock_adjustments` | Stock updated, logged in audit trail | **PASS** |
