@@ -1,0 +1,22 @@
+{
+  "name": "pharmacy-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack Pharmacy Management System with SQLite database, complete CRUD, real-time search, POS billing, and analytics dashboard.",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "node server/app.js",
+    "test": "node -e \"console.log('Testing server health...'); require('./server/config/database'); console.log('Database verified successfully.');\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "morgan": "^1.12.1"
+  }
+}

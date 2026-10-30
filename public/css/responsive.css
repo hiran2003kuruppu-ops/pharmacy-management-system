@@ -1,0 +1,123 @@
+/* ==============================================================
+   PharmaCare Pro - Responsive Layout & Mobile Stylesheet
+   ============================================================== */
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pos-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pos-cart-panel .content-card {
+    position: static;
+  }
+
+  .form-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .mobile-close-btn {
+    display: block;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .content-wrapper {
+    padding: 16px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-row-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-actions {
+    justify-content: space-between;
+  }
+
+  .filter-row-bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-item {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .filter-item .form-select {
+    width: 100%;
+  }
+
+  .category-cards-grid, .suppliers-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .modal-dialog {
+    margin: 10px;
+    max-height: 95vh;
+  }
+
+  .modal-header, .modal-body, .modal-footer {
+    padding: 16px;
+  }
+
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .toast {
+    min-width: 100%;
+  }
+}
