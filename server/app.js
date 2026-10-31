@@ -28,8 +28,8 @@ app.use('/api', apiRoutes);
 
 // Fallback to index.html for SPA client-side routing (Express 5 compatible)
 app.use((req, res, next) => {
-  if (req.method === 'GET' && !req.path.startsWith('/api')) {
-    return res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.includes('.')) {
+    return res.sendFile('index.html', { root: path.resolve(__dirname, '..', 'public') });
   }
   next();
 });

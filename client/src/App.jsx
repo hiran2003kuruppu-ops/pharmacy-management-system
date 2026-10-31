@@ -11,6 +11,7 @@ import Categories from './pages/Categories';
 import Suppliers from './pages/Suppliers';
 import Sales from './pages/Sales';
 import Login from './pages/Login';
+import DatabaseExplorer from './pages/DatabaseExplorer';
 
 function Layout({ children, theme, toggleTheme }) {
   const location = useLocation();
@@ -23,6 +24,7 @@ function Layout({ children, theme, toggleTheme }) {
       case '/categories': return 'Therapeutic Drug Classification Registry';
       case '/suppliers': return 'Pharmaceutical Distributors & Supply Chain';
       case '/sales': return 'Dispensation Invoices & Financial Audit Log';
+      case '/database': return 'MongoDB Collections & Document Inspector';
       case '/login': return 'Portal Authentication';
       default: return 'PharmaCare Pro Management Suite';
     }
@@ -68,6 +70,7 @@ function MainApp() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/sales" element={<Sales />} />
+          <Route path="/database" element={<DatabaseExplorer />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

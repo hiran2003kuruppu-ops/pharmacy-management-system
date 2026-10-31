@@ -58,6 +58,12 @@ export default function Sidebar({ theme, toggleTheme }) {
           <Truck size={18} />
           <span>Suppliers Directory</span>
         </NavLink>
+
+        <div className="nav-label">SYSTEM &amp; EVALUATION</div>
+        <NavLink to="/database" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+          <Database size={18} />
+          <span>MongoDB Explorer</span>
+        </NavLink>
       </nav>
 
       <div className="sidebar-footer">
