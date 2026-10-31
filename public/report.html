@@ -182,25 +182,53 @@
     /* Figures */
     .fig-container {
       text-align: center;
-      margin: 10px 0 14px;
+      margin: 6px 0 10px;
     }
 
     .fig-img {
       max-width: 100%;
-      max-height: 200px;
+      max-height: 175px;
       border: 1px solid #94a3b8;
       border-radius: 4px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      display: block;
+      margin: 0 auto;
     }
 
     .fig-img-lg {
-      max-height: 240px;
+      max-height: 230px;
+    }
+
+    .fig-dual {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: stretch;
+      margin: 6px 0 8px;
+    }
+
+    .fig-dual-col {
+      flex: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fig-dual-col img {
+      width: 100%;
+      height: 125px;
+      object-fit: cover;
+      object-position: top;
+      border: 1px solid #94a3b8;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      display: block;
     }
 
     .fig-caption {
-      font-size: 9.5pt;
+      font-size: 8.5pt;
       font-style: italic;
-      margin-top: 4px;
+      margin-top: 3px;
       color: #1e293b;
     }
 
@@ -261,8 +289,8 @@
   <!-- ============================================================== -->
   <!-- PAGE 2: ABSTRACT, INTRODUCTION, REQUIREMENTS                   -->
   <!-- ============================================================== -->
-  <div class="page">
-    <h2 class="section-title">1. Abstract</h2>
+  <div class="page" style="line-height: 1.36; font-size: 10pt; padding: 18mm 18mm 18mm 18mm;">
+    <h2 class="section-title" style="margin-top: 6px;">1. Abstract</h2>
     <p>
       PharmaCare Pro is a full-stack web application that provides comprehensive, computerized inventory control, prescription verification, and point-of-sale (POS) dispensing for community pharmacies in Sri Lanka. It replaces error-prone paper registers and fragmented spreadsheets with a centralized, real-time searchable catalog of medicines. The system employs a robust three-tier architecture: a responsive Single-Page Application (SPA) front end built with semantic HTML5, CSS3, and Vanilla JavaScript; an Express 5 REST API running on Node.js 24; and a persistent, ACID-compliant SQLite 3 database managed via <code>better-sqlite3</code> with foreign key enforcement and Write-Ahead Logging (WAL). The application enforces strict domain constraints, batch expiry tracking, and doctor prescription ID validation for regulated pharmaceuticals. All automated integration test scenarios pass successfully.
     </p>
@@ -441,13 +469,19 @@
     </p>
 
     <div class="fig-container">
-      <img src="assets/fig5_dashboard.svg" alt="Dashboard Screen" class="fig-img">
+      <img src="assets/fig5_dashboard.png" alt="Dashboard Screen" class="fig-img">
       <p class="fig-caption">Figure 5: PharmaCare Pro Dashboard featuring Live KPI Cards, Chart.js Visualizations, and Attention Table</p>
     </div>
 
-    <div class="fig-container">
-      <img src="assets/fig6_inventory.svg" alt="Inventory Screen" class="fig-img">
-      <p class="fig-caption">Figure 6: Medicines Inventory Catalog with Multi-Criteria Filter Bar and Search Results in Sri Lankan Rupees (Rs.)</p>
+    <div class="fig-dual">
+      <div class="fig-dual-col">
+        <img src="assets/fig6_inventory.png" alt="Inventory Screen">
+        <p class="fig-caption">Figure 6(a): Medicines Inventory Catalog (LKR)</p>
+      </div>
+      <div class="fig-dual-col">
+        <img src="assets/fig6_search.png" alt="Search Filter Screen">
+        <p class="fig-caption">Figure 6(b): Debounced Live Search ('Amox')</p>
+      </div>
     </div>
   </div>
 
@@ -455,18 +489,24 @@
   <!-- PAGE 7: UI SCREENSHOTS (PART 2)                                -->
   <!-- ============================================================== -->
   <div class="page">
-    <div class="fig-container" style="margin-top: 5px;">
-      <img src="assets/fig7_details.svg" alt="Medicine Details Screen" class="fig-img">
+    <div class="fig-container" style="margin-top: 2px;">
+      <img src="assets/fig7_details.png" alt="Medicine Details Screen" class="fig-img">
       <p class="fig-caption">Figure 7: Medicine Detailed Specification Screen showing Pricing Margins, Supplier Contact, and Audit Trail</p>
     </div>
 
-    <div class="fig-container">
-      <img src="assets/fig8_addmed.svg" alt="Add Medicine Modal Form" class="fig-img">
-      <p class="fig-caption">Figure 8: Add / Edit Medicine Modal Form with Live Field Validation and Prescription Requirement Flag</p>
+    <div class="fig-dual">
+      <div class="fig-dual-col">
+        <img src="assets/fig8_addmed.png" alt="Add Medicine Form">
+        <p class="fig-caption">Figure 8(a): Add / Edit Medicine Modal Form</p>
+      </div>
+      <div class="fig-dual-col">
+        <img src="assets/fig8_stockadj.png" alt="Stock Adjustment Modal">
+        <p class="fig-caption">Figure 8(b): Stock Restock / Quarantine Audit</p>
+      </div>
     </div>
 
     <div class="fig-container">
-      <img src="assets/fig9_pos.svg" alt="POS Dispensing Counter" class="fig-img">
+      <img src="assets/fig9_pos.png" alt="POS Dispensing Counter" class="fig-img">
       <p class="fig-caption">Figure 9: Point of Sale (POS) Dispensing Counter with Real-Time Cart, Prescription Validation, and Bill Summary</p>
     </div>
   </div>
@@ -475,14 +515,26 @@
   <!-- PAGE 8: UI SCREENSHOTS (PART 3) & TEST METHODOLOGY             -->
   <!-- ============================================================== -->
   <div class="page">
-    <div class="fig-container" style="margin-top: 5px;">
-      <img src="assets/fig10_receipt.svg" alt="Official Dispensation Receipt" class="fig-img" style="max-height: 195px;">
-      <p class="fig-caption">Figure 10: Official Dispensation Receipt / Invoice in Sri Lankan Rupees (Rs.) with Print Optimization</p>
+    <div class="fig-dual" style="margin-top: 2px;">
+      <div class="fig-dual-col">
+        <img src="assets/fig10_receipt.png" alt="Official Receipt">
+        <p class="fig-caption">Figure 10: Official Receipt / Invoice in Rs.</p>
+      </div>
+      <div class="fig-dual-col">
+        <img src="assets/fig11_categories.png" alt="Categories Directory">
+        <p class="fig-caption">Figure 11(a): Drug Categories Directory</p>
+      </div>
     </div>
 
-    <div class="fig-container">
-      <img src="assets/fig11_suppliers.svg" alt="Suppliers & Categories Screen" class="fig-img" style="max-height: 165px;">
-      <p class="fig-caption">Figure 11: Pharmaceutical Suppliers Directory and Drug Categories Management Screens</p>
+    <div class="fig-dual">
+      <div class="fig-dual-col">
+        <img src="assets/fig11_suppliers.png" alt="Suppliers Directory">
+        <p class="fig-caption">Figure 11(b): Pharmaceutical Suppliers Directory</p>
+      </div>
+      <div class="fig-dual-col">
+        <img src="assets/fig13_darkmode.png" alt="Dark Mode Interface">
+        <p class="fig-caption">Figure 12: Adaptive Dark Mode Theme Interface</p>
+      </div>
     </div>
 
     <h2 class="section-title">7. Testing, Verification, and Evaluation</h2>
