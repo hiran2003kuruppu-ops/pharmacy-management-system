@@ -66,9 +66,9 @@
 > 
 > If we add a regulated drug that requires a prescription, the system automatically marks the **Doctor Prescription ID** field as required. Attempting to check out without an Rx reference displays a clear error.
 > 
-> Let's enter the customer name *'David Clark'*, phone number, enter prescription ID *'DR-9921'*, apply a 5% discount, and choose payment by Card.
+> Let's enter the customer name *'Nimal Perera'*, phone number *'0771234567'*, enter prescription ID *'SLMC-9421'*, apply a 5% discount, and choose payment by Cash.
 > 
-> When I click **'Complete Dispensation'**, the system executes an atomic transaction: it verifies stock availability, deducts inventory units, saves the invoice, and immediately renders this official printable receipt with invoice numbers and itemized tax calculations."
+> When I click **'Complete Dispensation'**, the system executes an atomic transaction: it verifies stock availability, deducts inventory units, saves the invoice, and immediately renders this official printable receipt with invoice numbers and itemized calculations in Sri Lankan Rupees."
 
 ---
 
