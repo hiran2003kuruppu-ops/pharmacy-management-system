@@ -1,226 +1,131 @@
-const db = require('../config/database');
+const Sale = require('../models/Sale');
+const Medicine = require('../models/Medicine');
 
-// GET /api/sales - List sales with customer or invoice search
-function getAllSales(req, res, next) {
-  try {
-    const { q = '', date = '', page = 1, limit = 50 } = req.query;
-
-    const conditions = [];
-    const params = [];
-
-    if (q && q.trim()) {
-      conditions.push('(s.invoice_number LIKE ? OR s.customer_name LIKE ? OR s.customer_phone LIKE ?)');
-      const term = `%${q.trim()}%`;
-      params.push(term, term, term);
-    }
-
-    if (date) {
-      conditions.push("date(s.created_at) = ?");
-      params.push(date);
-    }
-
-    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
-
-    const countSql = `SELECT COUNT(*) as total FROM sales s ${whereClause}`;
-    const totalCount = db.prepare(countSql).get(...params).total;
-
-    const pageNum = Math.max(1, parseInt(page, 10) || 1);
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 50));
-    const offset = (pageNum - 1) * limitNum;
-
-    const sql = `
-      SELECT
-        s.*,
-        COUNT(si.id) as item_count,
-        COALESCE(SUM(si.quantity), 0) as total_units
-      FROM sales s
-      LEFT JOIN sale_items si ON s.id = si.sale_id
-      ${whereClause}
-      GROUP BY s.id
-      ORDER BY s.created_at DESC
-      LIMIT ? OFFSET ?
-    `;
-
-    const sales = db.prepare(sql).all(...params, limitNum, offset);
-
-    res.json({
-      success: true,
-      data: sales,
-      pagination: {
-        page: pageNum,
-        limit: limitNum,
-        total: totalCount,
-        totalPages: Math.ceil(totalCount / limitNum)
-      }
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-// GET /api/sales/:id - Invoice details
-function getSaleById(req, res, next) {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const sale = db.prepare('SELECT * FROM sales WHERE id = ?').get(id);
-    if (!sale) {
-      return res.status(404).json({ success: false, message: 'Sale invoice not found.' });
-    }
-
-    const items = db.prepare(`
-      SELECT
-        si.*,
-        m.name as medicine_name,
-        m.sku,
-        m.dosage_form,
-        m.strength
-      FROM sale_items si
-      JOIN medicines m ON si.medicine_id = m.id
-      WHERE si.sale_id = ?
-    `).all(id);
-
-    res.json({
-      success: true,
-      data: {
-        ...sale,
-        items
-      }
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-// POST /api/sales - Checkout transaction
-function createSale(req, res, next) {
+exports.createSale = async (req, res) => {
   try {
     const {
       customer_name,
       customer_phone,
-      doctor_prescription_id,
+      prescription_id,
+      items,
       discount_percent = 0,
-      payment_method,
-      items
+      payment_method = 'Cash'
     } = req.body;
 
-    // Execute within SQLite transaction to ensure ACID compliance
-    const executeCheckout = db.transaction(() => {
-      // 1. Verify all medicines and check stock
-      let subtotal = 0;
-      const verifiedItems = [];
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ success: false, message: 'Cart cannot be empty.' });
+    }
 
-      for (const item of items) {
-        const medId = parseInt(item.medicine_id, 10);
-        const reqQty = parseInt(item.quantity, 10);
+    let calculatedSubtotal = 0;
+    const validatedItems = [];
+    let prescriptionRequired = false;
 
-        const med = db.prepare('SELECT * FROM medicines WHERE id = ?').get(medId);
-        if (!med) {
-          throw new Error(`Medicine with ID ${medId} does not exist.`);
-        }
-
-        if (med.quantity_in_stock < reqQty) {
-          throw new Error(`Insufficient stock for '${med.name}'. Requested: ${reqQty}, Available: ${med.quantity_in_stock}.`);
-        }
-
-        // Check prescription requirement
-        if (med.requires_prescription === 1 && (!doctor_prescription_id || !doctor_prescription_id.trim())) {
-          throw new Error(`'${med.name}' is a prescription-only drug. Doctor prescription reference ID is required.`);
-        }
-
-        const itemSubtotal = med.unit_price * reqQty;
-        subtotal += itemSubtotal;
-
-        verifiedItems.push({
-          medicine_id: med.id,
-          name: med.name,
-          quantity: reqQty,
-          unit_price: med.unit_price,
-          subtotal: itemSubtotal,
-          current_stock: med.quantity_in_stock
+    // Verify stock and calculate totals
+    for (const item of items) {
+      const medicine = await Medicine.findById(item.medicine_id || item.medicine);
+      if (!medicine) {
+        return res.status(404).json({
+          success: false,
+          message: `Medicine not found for ID: ${item.medicine_id || item.medicine}`
         });
       }
 
-      // Calculate discount and total
-      const discPct = Math.max(0, Math.min(100, parseFloat(discount_percent) || 0));
-      const discountAmount = (subtotal * discPct) / 100;
-      const totalAmount = Math.max(0, subtotal - discountAmount);
-
-      // Generate invoice number
-      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
-      const invoiceNumber = `INV-${dateStr}-${randomSuffix}`;
-
-      // Insert sale record
-      const saleInsert = db.prepare(`
-        INSERT INTO sales (
-          invoice_number, customer_name, customer_phone,
-          doctor_prescription_id, subtotal, discount_percent,
-          total_amount, payment_method
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-      `).run(
-        invoiceNumber,
-        customer_name.trim(),
-        customer_phone ? customer_phone.trim() : null,
-        doctor_prescription_id ? doctor_prescription_id.trim() : null,
-        subtotal,
-        discPct,
-        totalAmount,
-        payment_method
-      );
-
-      const saleId = saleInsert.lastInsertRowid;
-
-      // Insert items and deduct stock
-      const insertItemStmt = db.prepare(`
-        INSERT INTO sale_items (sale_id, medicine_id, quantity, unit_price, subtotal)
-        VALUES (?, ?, ?, ?, ?)
-      `);
-
-      const updateStockStmt = db.prepare(`
-        UPDATE medicines
-        SET quantity_in_stock = quantity_in_stock - ?, updated_at = CURRENT_TIMESTAMP
-        WHERE id = ?
-      `);
-
-      const logStockStmt = db.prepare(`
-        INSERT INTO stock_adjustments (medicine_id, type, quantity, reason)
-        VALUES (?, 'Damaged', ?, ?)
-      `);
-
-      for (const vItem of verifiedItems) {
-        insertItemStmt.run(saleId, vItem.medicine_id, vItem.quantity, vItem.unit_price, vItem.subtotal);
-        updateStockStmt.run(vItem.quantity, vItem.medicine_id);
+      const qty = parseInt(item.quantity, 10);
+      if (qty <= 0) {
+        return res.status(400).json({ success: false, message: 'Item quantity must be at least 1.' });
       }
 
-      return {
-        id: saleId,
-        invoice_number: invoiceNumber,
-        customer_name,
-        subtotal,
-        discount_percent: discPct,
-        total_amount: totalAmount,
-        payment_method,
-        items: verifiedItems
-      };
-    });
+      if (medicine.quantity_in_stock < qty) {
+        return res.status(400).json({
+          success: false,
+          message: `Insufficient stock for '${medicine.name}'. Available: ${medicine.quantity_in_stock}, Requested: ${qty}.`
+        });
+      }
 
-    const result = executeCheckout();
+      if (medicine.requires_prescription) {
+        prescriptionRequired = true;
+      }
+
+      const lineTotal = medicine.unit_price * qty;
+      calculatedSubtotal += lineTotal;
+
+      validatedItems.push({
+        medicine: medicine._id,
+        medicine_name: medicine.name,
+        sku: medicine.sku,
+        quantity: qty,
+        unit_price: medicine.unit_price,
+        total_price: lineTotal
+      });
+    }
+
+    // Prescription enforcement
+    if (prescriptionRequired && (!prescription_id || !prescription_id.trim())) {
+      return res.status(400).json({
+        success: false,
+        message: 'Prescription ID is strictly required by NMRA regulations for regulated (Rx) medicines.'
+      });
+    }
+
+    const discountP = Math.min(Math.max(Number(discount_percent) || 0, 0), 100);
+    const discountAmount = (calculatedSubtotal * discountP) / 100;
+    const finalTotal = calculatedSubtotal - discountAmount;
+
+    // Decrement stock
+    for (const vItem of validatedItems) {
+      await Medicine.findByIdAndUpdate(vItem.medicine, {
+        $inc: { quantity_in_stock: -vItem.quantity }
+      });
+    }
+
+    // Generate Invoice Number
+    const count = await Sale.countDocuments();
+    const invoiceNumber = `INV-${String(count + 1).padStart(4, '0')}`;
+
+    const sale = await Sale.create({
+      invoice_number: invoiceNumber,
+      pharmacist: req.user ? req.user._id : null,
+      customer_name: customer_name || 'Walk-in Customer',
+      customer_phone: customer_phone || '',
+      prescription_id: prescription_id || '',
+      items: validatedItems,
+      subtotal: calculatedSubtotal,
+      discount_percent: discountP,
+      discount_amount: discountAmount,
+      total_amount: finalTotal,
+      payment_method
+    });
 
     res.status(201).json({
       success: true,
-      message: 'Sale transaction processed successfully.',
-      data: result
+      message: 'Dispensation completed successfully.',
+      data: sale
     });
-  } catch (err) {
-    res.status(400).json({
-      success: false,
-      message: err.message
-    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-module.exports = {
-  getAllSales,
-  getSaleById,
-  createSale
+exports.getAllSales = async (req, res) => {
+  try {
+    const { limit = 50 } = req.query;
+    const sales = await Sale.find()
+      .populate('pharmacist', 'name')
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit, 10));
+
+    res.status(200).json({ success: true, data: sales });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getSaleById = async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id).populate('pharmacist', 'name');
+    if (!sale) return res.status(404).json({ success: false, message: 'Sale invoice not found.' });
+    res.status(200).json({ success: true, data: sale });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };

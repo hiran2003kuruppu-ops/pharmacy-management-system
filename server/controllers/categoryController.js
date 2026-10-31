@@ -1,121 +1,61 @@
-const db = require('../config/database');
+const Category = require('../models/Category');
+const Medicine = require('../models/Medicine');
 
-function getAllCategories(req, res, next) {
+exports.getAllCategories = async (req, res) => {
   try {
-    const categories = db.prepare(`
-      SELECT
-        c.*,
-        COUNT(m.id) as total_medicines,
-        COALESCE(SUM(m.quantity_in_stock), 0) as total_stock
-      FROM categories c
-      LEFT JOIN medicines m ON c.id = m.category_id
-      GROUP BY c.id
-      ORDER BY c.name ASC
-    `).all();
-
-    res.json({ success: true, data: categories });
-  } catch (err) {
-    next(err);
+    const categories = await Category.find().sort({ name: 1 });
+    // Also include drug counts
+    const withCounts = await Promise.all(categories.map(async (cat) => {
+      const count = await Medicine.countDocuments({ category: cat._id });
+      return {
+        ...cat.toObject(),
+        medicine_count: count
+      };
+    }));
+    res.status(200).json({ success: true, data: withCounts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-function getCategoryById(req, res, next) {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const category = db.prepare('SELECT * FROM categories WHERE id = ?').get(id);
-    if (!category) {
-      return res.status(404).json({ success: false, message: 'Category not found.' });
-    }
-    res.json({ success: true, data: category });
-  } catch (err) {
-    next(err);
-  }
-}
-
-function createCategory(req, res, next) {
+exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
-    const existing = db.prepare('SELECT id FROM categories WHERE name = ? COLLATE NOCASE').get(name.trim());
-    if (existing) {
-      return res.status(409).json({
-        success: false,
-        message: 'A category with this name already exists.',
-        errors: { name: 'Category name must be unique.' }
-      });
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, message: 'Category name is required.' });
     }
-
-    const info = db.prepare('INSERT INTO categories (name, description) VALUES (?, ?)').run(
-      name.trim(),
-      description ? description.trim() : null
-    );
-
-    const created = db.prepare('SELECT * FROM categories WHERE id = ?').get(info.lastInsertRowid);
-    res.status(201).json({ success: true, message: 'Category created successfully.', data: created });
-  } catch (err) {
-    next(err);
+    const category = await Category.create({ name: name.trim(), description });
+    res.status(201).json({ success: true, data: category });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({ success: false, message: 'Category name already exists.' });
+    }
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-function updateCategory(req, res, next) {
+exports.updateCategory = async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    const { name, description } = req.body;
-
-    const existing = db.prepare('SELECT id FROM categories WHERE id = ?').get(id);
-    if (!existing) {
-      return res.status(404).json({ success: false, message: 'Category not found.' });
-    }
-
-    const duplicate = db.prepare('SELECT id FROM categories WHERE name = ? COLLATE NOCASE AND id != ?').get(name.trim(), id);
-    if (duplicate) {
-      return res.status(409).json({
-        success: false,
-        message: 'Another category with this name already exists.',
-        errors: { name: 'Category name must be unique.' }
-      });
-    }
-
-    db.prepare('UPDATE categories SET name = ?, description = ? WHERE id = ?').run(
-      name.trim(),
-      description ? description.trim() : null,
-      id
-    );
-
-    const updated = db.prepare('SELECT * FROM categories WHERE id = ?').get(id);
-    res.json({ success: true, message: 'Category updated successfully.', data: updated });
-  } catch (err) {
-    next(err);
+    const category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!category) return res.status(404).json({ success: false, message: 'Category not found.' });
+    res.status(200).json({ success: true, data: category });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-function deleteCategory(req, res, next) {
+exports.deleteCategory = async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    const existing = db.prepare('SELECT * FROM categories WHERE id = ?').get(id);
-    if (!existing) {
-      return res.status(404).json({ success: false, message: 'Category not found.' });
-    }
-
-    // Safety check: verify no medicines belong to this category
-    const medCount = db.prepare('SELECT COUNT(*) as count FROM medicines WHERE category_id = ?').get(id).count;
-    if (medCount > 0) {
+    const inUse = await Medicine.findOne({ category: req.params.id });
+    if (inUse) {
       return res.status(400).json({
         success: false,
-        message: `Cannot delete category '${existing.name}' because it contains ${medCount} medicine item(s). Reassign them first.`
+        message: 'Cannot delete category: active medicines are categorized under it.'
       });
     }
-
-    db.prepare('DELETE FROM categories WHERE id = ?').run(id);
-    res.json({ success: true, message: `Category '${existing.name}' was safely deleted.` });
-  } catch (err) {
-    next(err);
+    await Category.findByIdAndDelete(req.params.id);
+    res.status(200).json({ success: true, message: 'Category safely deleted.' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-}
-
-module.exports = {
-  getAllCategories,
-  getCategoryById,
-  createCategory,
-  updateCategory,
-  deleteCategory
 };

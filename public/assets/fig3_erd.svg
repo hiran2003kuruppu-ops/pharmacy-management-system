@@ -1,102 +1,99 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 480" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
   <rect width="100%" height="100%" fill="#ffffff"/>
 
-  <!-- Table 1: Categories (Top-Left) -->
+  <!-- Collection 1: Users (Top-Left) -->
   <g transform="translate(30, 20)">
-    <rect width="210" height="115" rx="6" fill="#f8fafc" stroke="#3b82f6" stroke-width="1.8"/>
+    <rect width="210" height="120" rx="6" fill="#f8fafc" stroke="#6366f1" stroke-width="1.8"/>
+    <rect width="210" height="26" rx="6" fill="#6366f1"/>
+    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">users (Collection)</text>
+    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">_id <tspan fill="#64748b" font-weight="normal">ObjectId (PK)</tspan></text>
+    <text x="12" y="60" font-size="9.5" fill="#1e293b">name <tspan fill="#64748b">String (required)</tspan></text>
+    <text x="12" y="76" font-size="9.5" fill="#1e293b">email <tspan fill="#64748b">String (unique, indexed)</tspan></text>
+    <text x="12" y="92" font-size="9.5" fill="#1e293b">password <tspan fill="#64748b">String (bcrypt hash)</tspan></text>
+    <text x="12" y="108" font-size="9.5" fill="#1e293b">role <tspan fill="#64748b">Enum['admin', 'pharmacist']</tspan></text>
+  </g>
+
+  <!-- Collection 2: Categories (Top-Center) -->
+  <g transform="translate(275, 20)">
+    <rect width="210" height="120" rx="6" fill="#f8fafc" stroke="#3b82f6" stroke-width="1.8"/>
     <rect width="210" height="26" rx="6" fill="#3b82f6"/>
-    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">categories</text>
-    <text x="12" y="44" font-size="10" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK)</tspan></text>
-    <text x="12" y="62" font-size="10" fill="#1e293b">name <tspan fill="#64748b">TEXT UNIQUE NOT NULL</tspan></text>
-    <text x="12" y="80" font-size="10" fill="#1e293b">description <tspan fill="#64748b">TEXT</tspan></text>
-    <text x="12" y="98" font-size="10" fill="#1e293b">created_at <tspan fill="#64748b">DATETIME</tspan></text>
+    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">categories (Collection)</text>
+    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">_id <tspan fill="#64748b" font-weight="normal">ObjectId (PK)</tspan></text>
+    <text x="12" y="60" font-size="9.5" fill="#1e293b">name <tspan fill="#64748b">String (unique, required)</tspan></text>
+    <text x="12" y="76" font-size="9.5" fill="#1e293b">description <tspan fill="#64748b">String</tspan></text>
+    <text x="12" y="92" font-size="9.5" fill="#1e293b">createdAt, updatedAt <tspan fill="#64748b">Date</tspan></text>
   </g>
 
-  <!-- Table 2: Suppliers (Top-Right) -->
+  <!-- Collection 3: Suppliers (Top-Right) -->
   <g transform="translate(520, 20)">
-    <rect width="210" height="135" rx="6" fill="#f8fafc" stroke="#0d9488" stroke-width="1.8"/>
+    <rect width="210" height="120" rx="6" fill="#f8fafc" stroke="#0d9488" stroke-width="1.8"/>
     <rect width="210" height="26" rx="6" fill="#0d9488"/>
-    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">suppliers</text>
-    <text x="12" y="44" font-size="10" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK)</tspan></text>
-    <text x="12" y="62" font-size="10" fill="#1e293b">name <tspan fill="#64748b">TEXT NOT NULL</tspan></text>
-    <text x="12" y="80" font-size="10" fill="#1e293b">contact_person <tspan fill="#64748b">TEXT</tspan></text>
-    <text x="12" y="98" font-size="10" fill="#1e293b">phone <tspan fill="#64748b">TEXT NOT NULL</tspan></text>
-    <text x="12" y="116" font-size="10" fill="#1e293b">email, address <tspan fill="#64748b">TEXT</tspan></text>
+    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">suppliers (Collection)</text>
+    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">_id <tspan fill="#64748b" font-weight="normal">ObjectId (PK)</tspan></text>
+    <text x="12" y="60" font-size="9.5" fill="#1e293b">name <tspan fill="#64748b">String (required)</tspan></text>
+    <text x="12" y="76" font-size="9.5" fill="#1e293b">contact_person, phone <tspan fill="#64748b">String</tspan></text>
+    <text x="12" y="92" font-size="9.5" fill="#1e293b">email, address <tspan fill="#64748b">String</tspan></text>
   </g>
 
-  <!-- Table 3: Medicines (Center) -->
-  <g transform="translate(240, 160)">
-    <rect width="280" height="205" rx="6" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
-    <rect width="280" height="26" rx="6" fill="#0284c7"/>
-    <text x="140" y="18" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">medicines</text>
-    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK, AUTOINCREMENT)</tspan></text>
-    <text x="12" y="60" font-size="9.5" fill="#1e293b">sku <tspan fill="#64748b">TEXT UNIQUE NOT NULL</tspan></text>
-    <text x="12" y="76" font-size="9.5" fill="#1e293b">name, generic_name <tspan fill="#64748b">TEXT NOT NULL</tspan></text>
-    <text x="12" y="92" font-size="9.5" fill="#0369a1" font-weight="600">category_id <tspan fill="#64748b" font-weight="normal">INTEGER (FK &rarr; categories.id)</tspan></text>
-    <text x="12" y="108" font-size="9.5" fill="#0f766e" font-weight="600">supplier_id <tspan fill="#64748b" font-weight="normal">INTEGER (FK &rarr; suppliers.id)</tspan></text>
-    <text x="12" y="124" font-size="9.5" fill="#1e293b">dosage_form, strength <tspan fill="#64748b">TEXT NOT NULL</tspan></text>
-    <text x="12" y="140" font-size="9.5" fill="#1e293b">cost_price, unit_price <tspan fill="#64748b">REAL CHECK(&gt;=cost)</tspan></text>
-    <text x="12" y="156" font-size="9.5" fill="#1e293b">quantity_in_stock <tspan fill="#64748b">INTEGER CHECK(&gt;=0)</tspan></text>
-    <text x="12" y="172" font-size="9.5" fill="#1e293b">batch_number, expiry_date <tspan fill="#64748b">TEXT, DATE NOT NULL</tspan></text>
-    <text x="12" y="188" font-size="9.5" fill="#b91c1c" font-weight="bold">requires_prescription <tspan fill="#64748b" font-weight="normal">INTEGER CHECK(0,1)</tspan></text>
+  <!-- Collection 4: Medicines (Center-Right) -->
+  <g transform="translate(420, 175)">
+    <rect width="310" height="275" rx="6" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+    <rect width="310" height="26" rx="6" fill="#0284c7"/>
+    <text x="155" y="18" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">medicines (Collection)</text>
+    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">_id <tspan fill="#64748b" font-weight="normal">ObjectId (PK)</tspan></text>
+    <text x="12" y="60" font-size="9.5" fill="#1e293b">sku <tspan fill="#64748b">String (unique, indexed)</tspan></text>
+    <text x="12" y="76" font-size="9.5" fill="#1e293b">name, generic_name <tspan fill="#64748b">String (indexed)</tspan></text>
+    <text x="12" y="94" font-size="9.5" fill="#0369a1" font-weight="600">category <tspan fill="#64748b" font-weight="normal">ObjectId (ref &rarr; Category)</tspan></text>
+    <text x="12" y="112" font-size="9.5" fill="#0f766e" font-weight="600">supplier <tspan fill="#64748b" font-weight="normal">ObjectId (ref &rarr; Supplier)</tspan></text>
+    <text x="12" y="130" font-size="9.5" fill="#1e293b">dosage_form, strength <tspan fill="#64748b">String (required)</tspan></text>
+    <text x="12" y="148" font-size="9.5" fill="#1e293b">cost_price, unit_price <tspan fill="#64748b">Number (min: 0, LKR)</tspan></text>
+    <text x="12" y="166" font-size="9.5" fill="#1e293b">quantity_in_stock <tspan fill="#64748b">Number (min: 0)</tspan></text>
+    <text x="12" y="184" font-size="9.5" fill="#1e293b">batch_number, expiry_date <tspan fill="#64748b">String, Date</tspan></text>
+    <text x="12" y="202" font-size="9.5" fill="#b91c1c" font-weight="bold">requires_prescription <tspan fill="#64748b" font-weight="normal">Boolean</tspan></text>
+    <text x="12" y="220" font-size="9.5" fill="#1e293b">audit_trail <tspan fill="#64748b">Array of {type, qty, reason, date}</tspan></text>
+    <text x="12" y="238" font-size="9.5" fill="#64748b">virtuals: expiry_status, profit_margin</text>
+    <text x="12" y="256" font-size="9.5" fill="#64748b">indexes: { name: 'text', generic_name: 'text' }</text>
   </g>
 
-  <!-- Table 4: Sales (Bottom-Left) -->
-  <g transform="translate(30, 310)">
-    <rect width="180" height="150" rx="6" fill="#f8fafc" stroke="#f59e0b" stroke-width="1.8"/>
-    <rect width="180" height="26" rx="6" fill="#f59e0b"/>
-    <text x="90" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">sales</text>
-    <text x="10" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK)</tspan></text>
-    <text x="10" y="60" font-size="9.5" fill="#1e293b">invoice_number <tspan fill="#64748b">TEXT UK</tspan></text>
-    <text x="10" y="76" font-size="9.5" fill="#1e293b">customer_name <tspan fill="#64748b">TEXT NOT NULL</tspan></text>
-    <text x="10" y="92" font-size="9.5" fill="#b91c1c">doctor_prescription_id</text>
-    <text x="10" y="108" font-size="9.5" fill="#1e293b">subtotal, discount <tspan fill="#64748b">REAL</tspan></text>
-    <text x="10" y="124" font-size="9.5" fill="#1e293b">total_amount <tspan fill="#64748b">REAL CHECK(&gt;=0)</tspan></text>
-    <text x="10" y="140" font-size="9.5" fill="#1e293b">payment_method <tspan fill="#64748b">TEXT</tspan></text>
-  </g>
+  <!-- Collection 5: Sales (Center-Left) -->
+  <g transform="translate(30, 175)">
+    <rect width="340" height="275" rx="6" fill="#f8fafc" stroke="#f59e0b" stroke-width="2"/>
+    <rect width="340" height="26" rx="6" fill="#f59e0b"/>
+    <text x="170" y="18" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">sales (Collection - Embedded Docs)</text>
+    <text x="12" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">_id <tspan fill="#64748b" font-weight="normal">ObjectId (PK)</tspan></text>
+    <text x="12" y="60" font-size="9.5" fill="#1e293b">invoice_number <tspan fill="#64748b">String (unique, indexed)</tspan></text>
+    <text x="12" y="76" font-size="9.5" fill="#6366f1" font-weight="600">pharmacist <tspan fill="#64748b" font-weight="normal">ObjectId (ref &rarr; User)</tspan></text>
+    <text x="12" y="92" font-size="9.5" fill="#1e293b">customer_name, customer_phone <tspan fill="#64748b">String</tspan></text>
+    <text x="12" y="108" font-size="9.5" fill="#b91c1c" font-weight="600">prescription_id <tspan fill="#64748b" font-weight="normal">String (validated for Rx)</tspan></text>
+    
+    <!-- Embedded Sub-Document items box -->
+    <rect x="10" y="120" width="320" height="75" rx="4" fill="#ffffff" stroke="#8b5cf6" stroke-width="1.2"/>
+    <text x="18" y="135" font-size="9.5" font-weight="bold" fill="#8b5cf6">items: [ Array of Embedded Subdocuments ]</text>
+    <text x="24" y="152" font-size="8.8" fill="#1e293b">• medicine: ObjectId (ref &rarr; Medicine)</text>
+    <text x="24" y="167" font-size="8.8" fill="#1e293b">• medicine_name, sku, quantity, unit_price, total_price</text>
+    <text x="24" y="182" font-size="8.8" fill="#64748b">(Normalized embedded snapshot preserves historical prices)</text>
 
-  <!-- Table 5: Sale Items (Bottom-Center) -->
-  <g transform="translate(240, 385)">
-    <rect width="210" height="85" rx="6" fill="#f8fafc" stroke="#8b5cf6" stroke-width="1.8"/>
-    <rect width="210" height="24" rx="6" fill="#8b5cf6"/>
-    <text x="105" y="16" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">sale_items</text>
-    <text x="10" y="38" font-size="9" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK)</tspan></text>
-    <text x="10" y="52" font-size="9" fill="#f59e0b" font-weight="600">sale_id <tspan fill="#64748b" font-weight="normal">FK &rarr; sales (CASCADE)</tspan></text>
-    <text x="10" y="66" font-size="9" fill="#0284c7" font-weight="600">medicine_id <tspan fill="#64748b" font-weight="normal">FK &rarr; medicines (RESTRICT)</tspan></text>
-    <text x="10" y="80" font-size="9" fill="#1e293b">quantity, unit_price, subtotal</text>
-  </g>
-
-  <!-- Table 6: Stock Adjustments (Bottom-Right) -->
-  <g transform="translate(520, 310)">
-    <rect width="210" height="110" rx="6" fill="#f8fafc" stroke="#ec4899" stroke-width="1.8"/>
-    <rect width="210" height="26" rx="6" fill="#ec4899"/>
-    <text x="105" y="18" fill="#ffffff" font-size="11.5" font-weight="bold" text-anchor="middle">stock_adjustments</text>
-    <text x="10" y="44" font-size="9.5" font-weight="bold" fill="#1e293b">id <tspan fill="#64748b" font-weight="normal">INTEGER (PK)</tspan></text>
-    <text x="10" y="62" font-size="9.5" fill="#0284c7" font-weight="600">medicine_id <tspan fill="#64748b" font-weight="normal">FK &rarr; medicines</tspan></text>
-    <text x="10" y="80" font-size="9.5" fill="#1e293b">type <tspan fill="#64748b">CHECK(Restock,Damaged..)</tspan></text>
-    <text x="10" y="98" font-size="9.5" fill="#1e293b">quantity, reason, created_at</text>
+    <text x="12" y="212" font-size="9.5" fill="#1e293b">subtotal, discount_percent, discount_amount <tspan fill="#64748b">Number</tspan></text>
+    <text x="12" y="230" font-size="9.5" fill="#1e293b">total_amount <tspan fill="#64748b">Number (LKR Rs.)</tspan></text>
+    <text x="12" y="248" font-size="9.5" fill="#1e293b">payment_method <tspan fill="#64748b">Enum['Cash', 'Card', 'Online']</tspan></text>
+    <text x="12" y="266" font-size="9.5" fill="#1e293b">createdAt, updatedAt <tspan fill="#64748b">Date (timestamps)</tspan></text>
   </g>
 
   <!-- Relationship Lines -->
-  <!-- Categories to Medicines (1:N) -->
-  <path d="M 135 135 L 135 220 L 240 220" stroke="#3b82f6" stroke-width="1.8" fill="none"/>
-  <text x="140" y="180" font-size="9" fill="#3b82f6" font-weight="bold">1</text>
-  <text x="225" y="215" font-size="9" fill="#3b82f6" font-weight="bold">N</text>
+  <!-- Categories to Medicines (1:N Ref) -->
+  <path d="M 380 140 L 380 230 L 420 230" stroke="#3b82f6" stroke-width="1.8" fill="none"/>
+  <text x="385" y="170" font-size="9" fill="#3b82f6" font-weight="bold">1</text>
+  <text x="408" y="225" font-size="9" fill="#3b82f6" font-weight="bold">N (ref)</text>
 
-  <!-- Suppliers to Medicines (1:N) -->
-  <path d="M 625 155 L 625 220 L 520 220" stroke="#0d9488" stroke-width="1.8" fill="none"/>
-  <text x="630" y="185" font-size="9" fill="#0d9488" font-weight="bold">1</text>
-  <text x="530" y="215" font-size="9" fill="#0d9488" font-weight="bold">N</text>
+  <!-- Suppliers to Medicines (1:N Ref) -->
+  <path d="M 625 140 L 625 175" stroke="#0d9488" stroke-width="1.8" fill="none"/>
+  <text x="630" y="155" font-size="9" fill="#0d9488" font-weight="bold">1:N (ref)</text>
 
-  <!-- Medicines to Sale_Items (1:N) -->
-  <path d="M 345 365 L 345 385" stroke="#0284c7" stroke-width="1.8" fill="none"/>
-  <text x="350" y="375" font-size="9" fill="#0284c7" font-weight="bold">1:N</text>
+  <!-- Users to Sales (1:N Ref) -->
+  <path d="M 135 140 L 135 175" stroke="#6366f1" stroke-width="1.8" fill="none"/>
+  <text x="140" y="155" font-size="9" fill="#6366f1" font-weight="bold">1:N (ref)</text>
 
-  <!-- Sales to Sale_Items (1:N) -->
-  <path d="M 210 385 L 240 420" stroke="#f59e0b" stroke-width="1.8" fill="none"/>
-  <text x="215" y="410" font-size="9" fill="#f59e0b" font-weight="bold">1:N</text>
-
-  <!-- Medicines to Stock_Adjustments (1:N) -->
-  <path d="M 520 300 L 550 310" stroke="#ec4899" stroke-width="1.8" fill="none"/>
-  <text x="525" y="305" font-size="9" fill="#ec4899" font-weight="bold">1:N</text>
+  <!-- Medicines to Sales Embedded Items (Ref) -->
+  <path d="M 420 280 L 370 280" stroke="#0284c7" stroke-width="1.8" fill="none"/>
+  <text x="375" y="275" font-size="9" fill="#0284c7" font-weight="bold">item ref</text>
 </svg>

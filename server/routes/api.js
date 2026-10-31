@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+const authRoutes = require('./auth');
 const medicineRoutes = require('./medicines');
 const categoryRoutes = require('./categories');
 const supplierRoutes = require('./suppliers');
 const saleRoutes = require('./sales');
 const statsRoutes = require('./stats');
 
+router.use('/auth', authRoutes);
 router.use('/medicines', medicineRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/suppliers', supplierRoutes);

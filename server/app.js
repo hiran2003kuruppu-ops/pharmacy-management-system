@@ -6,6 +6,10 @@ const path = require('path');
 
 const apiRoutes = require('./routes/api');
 const errorHandler = require('./middleware/errorHandler');
+const connectDB = require('./config/db');
+
+// Connect to MongoDB Database
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 3000;

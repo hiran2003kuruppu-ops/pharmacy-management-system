@@ -1,465 +1,258 @@
-const db = require('../config/database');
+const Medicine = require('../models/Medicine');
+const Sale = require('../models/Sale');
 
-// GET /api/medicines - List with search, filter, sort, pagination
-function getAllMedicines(req, res, next) {
+exports.getAllMedicines = async (req, res) => {
   try {
     const {
-      q = '',
-      category_id = '',
-      supplier_id = '',
-      stock_status = '',   // 'all', 'low', 'out', 'in_stock'
-      expiry_status = '',  // 'all', 'expired', 'near_expiry', 'valid'
-      sort_by = 'name',    // 'name', 'unit_price', 'quantity_in_stock', 'expiry_date', 'created_at'
-      sort_order = 'asc',  // 'asc', 'desc'
+      q,
+      category,
+      stock_status,
+      expiry_status,
+      sort_by = 'name',
+      sort_order = 'asc',
       page = 1,
-      limit = 50
+      limit = 15
     } = req.query;
 
-    const conditions = [];
-    const params = [];
+    const filter = {};
 
-    // Search query on SKU, Brand Name, or Generic Name
+    // Keyword search
     if (q && q.trim()) {
-      conditions.push('(m.name LIKE ? OR m.generic_name LIKE ? OR m.sku LIKE ?)');
-      const searchTerm = `%${q.trim()}%`;
-      params.push(searchTerm, searchTerm, searchTerm);
+      const regex = new RegExp(q.trim(), 'i');
+      filter.$or = [
+        { name: regex },
+        { generic_name: regex },
+        { sku: regex }
+      ];
     }
 
     // Category filter
-    if (category_id && !isNaN(parseInt(category_id, 10))) {
-      conditions.push('m.category_id = ?');
-      params.push(parseInt(category_id, 10));
+    if (category) {
+      filter.category = category;
     }
 
-    // Supplier filter
-    if (supplier_id && !isNaN(parseInt(supplier_id, 10))) {
-      conditions.push('m.supplier_id = ?');
-      params.push(parseInt(supplier_id, 10));
-    }
-
-    // Stock status filter
+    // Stock Status
     if (stock_status === 'out') {
-      conditions.push('m.quantity_in_stock = 0');
+      filter.quantity_in_stock = 0;
     } else if (stock_status === 'low') {
-      conditions.push('m.quantity_in_stock > 0 AND m.quantity_in_stock <= m.min_stock_threshold');
+      filter.quantity_in_stock = { $gt: 0, $lte: 15 };
     } else if (stock_status === 'in_stock') {
-      conditions.push('m.quantity_in_stock > m.min_stock_threshold');
+      filter.quantity_in_stock = { $gt: 15 };
     }
 
-    // Expiry status filter (relative to CURRENT_DATE)
+    // Expiry Status
+    const now = new Date();
+    const thirtyDaysAhead = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
     if (expiry_status === 'expired') {
-      conditions.push("m.expiry_date < date('now')");
+      filter.expiry_date = { $lt: now };
     } else if (expiry_status === 'near_expiry') {
-      conditions.push("m.expiry_date >= date('now') AND m.expiry_date <= date('now', '+30 days')");
+      filter.expiry_date = { $gte: now, $lte: thirtyDaysAhead };
     } else if (expiry_status === 'valid') {
-      conditions.push("m.expiry_date > date('now', '+30 days')");
+      filter.expiry_date = { $gt: thirtyDaysAhead };
     }
 
-    const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+    // Sorting
+    const sort = {};
+    sort[sort_by] = sort_order === 'desc' ? -1 : 1;
 
-    // Allowed sort columns
-    const allowedSortColumns = {
-      name: 'm.name',
-      unit_price: 'm.unit_price',
-      quantity_in_stock: 'm.quantity_in_stock',
-      expiry_date: 'm.expiry_date',
-      created_at: 'm.created_at',
-      sku: 'm.sku'
-    };
-    const orderCol = allowedSortColumns[sort_by] || 'm.name';
-    const orderDir = sort_order.toLowerCase() === 'desc' ? 'DESC' : 'ASC';
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const skip = (pageNum - 1) * limitNum;
 
-    // Count total matches
-    const countSql = `SELECT COUNT(*) as total FROM medicines m ${whereClause}`;
-    const totalCount = db.prepare(countSql).get(...params).total;
+    const total = await Medicine.countDocuments(filter);
+    const medicines = await Medicine.find(filter)
+      .populate('category', 'name')
+      .populate('supplier', 'name phone email')
+      .sort(sort)
+      .skip(skip)
+      .limit(limitNum);
 
-    // Pagination calculations
-    const pageNum = Math.max(1, parseInt(page, 10) || 1);
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 50));
-    const offset = (pageNum - 1) * limitNum;
-
-    const sql = `
-      SELECT
-        m.*,
-        c.name as category_name,
-        s.name as supplier_name,
-        CASE
-          WHEN m.quantity_in_stock = 0 THEN 'OUT_OF_STOCK'
-          WHEN m.quantity_in_stock <= m.min_stock_threshold THEN 'LOW_STOCK'
-          ELSE 'IN_STOCK'
-        END as stock_status,
-        CASE
-          WHEN m.expiry_date < date('now') THEN 'EXPIRED'
-          WHEN m.expiry_date <= date('now', '+30 days') THEN 'EXPIRING_SOON'
-          ELSE 'VALID'
-        END as expiry_status,
-        CAST((julianday(m.expiry_date) - julianday(date('now'))) AS INTEGER) as days_until_expiry
-      FROM medicines m
-      LEFT JOIN categories c ON m.category_id = c.id
-      LEFT JOIN suppliers s ON m.supplier_id = s.id
-      ${whereClause}
-      ORDER BY ${orderCol} ${orderDir}
-      LIMIT ? OFFSET ?
-    `;
-
-    const medicines = db.prepare(sql).all(...params, limitNum, offset);
-
-    res.json({
+    res.status(200).json({
       success: true,
       data: medicines,
       pagination: {
+        total,
         page: pageNum,
         limit: limitNum,
-        total: totalCount,
-        totalPages: Math.ceil(totalCount / limitNum)
+        totalPages: Math.ceil(total / limitNum)
       }
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-// GET /api/medicines/:id - Retrieve single medicine with relationships & logs
-function getMedicineById(req, res, next) {
+exports.getMedicineById = async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid medicine ID.' });
-    }
+    const medicine = await Medicine.findById(req.params.id)
+      .populate('category', 'name')
+      .populate('supplier', 'name phone email contact_person address');
 
-    const sql = `
-      SELECT
-        m.*,
-        c.name as category_name,
-        s.name as supplier_name,
-        s.phone as supplier_phone,
-        s.email as supplier_email,
-        CASE
-          WHEN m.quantity_in_stock = 0 THEN 'OUT_OF_STOCK'
-          WHEN m.quantity_in_stock <= m.min_stock_threshold THEN 'LOW_STOCK'
-          ELSE 'IN_STOCK'
-        END as stock_status,
-        CASE
-          WHEN m.expiry_date < date('now') THEN 'EXPIRED'
-          WHEN m.expiry_date <= date('now', '+30 days') THEN 'EXPIRING_SOON'
-          ELSE 'VALID'
-        END as expiry_status,
-        CAST((julianday(m.expiry_date) - julianday(date('now'))) AS INTEGER) as days_until_expiry
-      FROM medicines m
-      LEFT JOIN categories c ON m.category_id = c.id
-      LEFT JOIN suppliers s ON m.supplier_id = s.id
-      WHERE m.id = ?
-    `;
-
-    const medicine = db.prepare(sql).get(id);
     if (!medicine) {
       return res.status(404).json({ success: false, message: 'Medicine not found.' });
     }
 
-    // Get stock adjustments log
-    const adjustments = db.prepare(`
-      SELECT * FROM stock_adjustments
-      WHERE medicine_id = ?
-      ORDER BY created_at DESC
-      LIMIT 10
-    `).all(id);
-
-    // Get sales count
-    const salesStats = db.prepare(`
-      SELECT COUNT(*) as total_sales, COALESCE(SUM(quantity), 0) as total_units_sold
-      FROM sale_items
-      WHERE medicine_id = ?
-    `).get(id);
-
-    res.json({
-      success: true,
-      data: {
-        ...medicine,
-        adjustments,
-        salesStats
-      }
-    });
-  } catch (err) {
-    next(err);
+    res.status(200).json({ success: true, data: medicine });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
-}
+};
 
-// POST /api/medicines - Create new medicine
-function createMedicine(req, res, next) {
+exports.createMedicine = async (req, res) => {
   try {
     const {
       sku,
       name,
       generic_name,
-      category_id,
-      supplier_id,
+      category,
+      supplier,
       dosage_form,
       strength,
+      batch_number,
       cost_price,
       unit_price,
       quantity_in_stock,
       min_stock_threshold,
       expiry_date,
-      batch_number,
       requires_prescription,
       description
     } = req.body;
 
-    // Check duplicate SKU
-    const existing = db.prepare('SELECT id FROM medicines WHERE sku = ?').get(sku.trim());
+    // Margin validation
+    if (Number(unit_price) < Number(cost_price)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Selling price cannot be less than cost price.'
+      });
+    }
+
+    // SKU check
+    const existing = await Medicine.findOne({ sku: sku.toUpperCase().trim() });
     if (existing) {
       return res.status(409).json({
         success: false,
-        message: `A medicine with SKU '${sku.trim()}' already exists in inventory.`,
-        errors: { sku: 'SKU is already in use.' }
+        message: `SKU '${sku}' already exists.`
       });
     }
 
-    const insertSql = `
-      INSERT INTO medicines (
-        sku, name, generic_name, category_id, supplier_id,
-        dosage_form, strength, cost_price, unit_price,
-        quantity_in_stock, min_stock_threshold, expiry_date,
-        batch_number, requires_prescription, description
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    const result = db.prepare(insertSql).run(
-      sku.trim(),
-      name.trim(),
-      generic_name.trim(),
-      parseInt(category_id, 10),
-      supplier_id ? parseInt(supplier_id, 10) : null,
-      dosage_form.trim(),
-      strength.trim(),
-      parseFloat(cost_price),
-      parseFloat(unit_price),
-      parseInt(quantity_in_stock, 10) || 0,
-      parseInt(min_stock_threshold, 10) || 10,
-      expiry_date,
-      batch_number.trim(),
-      requires_prescription ? 1 : 0,
-      description ? description.trim() : null
-    );
-
-    // Initial stock adjustment entry
-    if (parseInt(quantity_in_stock, 10) > 0) {
-      db.prepare(`
-        INSERT INTO stock_adjustments (medicine_id, type, quantity, reason)
-        VALUES (?, 'Restock', ?, 'Initial Inventory Setup')
-      `).run(result.lastInsertRowid, parseInt(quantity_in_stock, 10));
-    }
-
-    const created = db.prepare('SELECT * FROM medicines WHERE id = ?').get(result.lastInsertRowid);
-
-    res.status(201).json({
-      success: true,
-      message: 'Medicine record created successfully.',
-      data: created
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-// PUT /api/medicines/:id - Update existing medicine
-function updateMedicine(req, res, next) {
-  try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid medicine ID.' });
-    }
-
-    const existing = db.prepare('SELECT * FROM medicines WHERE id = ?').get(id);
-    if (!existing) {
-      return res.status(404).json({ success: false, message: 'Medicine not found.' });
-    }
-
-    const {
-      sku,
+    const medicine = await Medicine.create({
+      sku: sku.toUpperCase().trim(),
       name,
       generic_name,
-      category_id,
-      supplier_id,
+      category,
+      supplier: supplier || null,
       dosage_form,
       strength,
-      cost_price,
-      unit_price,
-      quantity_in_stock,
-      min_stock_threshold,
-      expiry_date,
       batch_number,
-      requires_prescription,
-      description
-    } = req.body;
-
-    // Check SKU conflict with another medicine
-    const skuConflict = db.prepare('SELECT id FROM medicines WHERE sku = ? AND id != ?').get(sku.trim(), id);
-    if (skuConflict) {
-      return res.status(409).json({
-        success: false,
-        message: `SKU '${sku.trim()}' is already used by another medicine record.`,
-        errors: { sku: 'SKU is already in use.' }
-      });
-    }
-
-    const newQty = parseInt(quantity_in_stock, 10);
-    const qtyDiff = newQty - existing.quantity_in_stock;
-
-    const updateSql = `
-      UPDATE medicines SET
-        sku = ?,
-        name = ?,
-        generic_name = ?,
-        category_id = ?,
-        supplier_id = ?,
-        dosage_form = ?,
-        strength = ?,
-        cost_price = ?,
-        unit_price = ?,
-        quantity_in_stock = ?,
-        min_stock_threshold = ?,
-        expiry_date = ?,
-        batch_number = ?,
-        requires_prescription = ?,
-        description = ?,
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `;
-
-    db.prepare(updateSql).run(
-      sku.trim(),
-      name.trim(),
-      generic_name.trim(),
-      parseInt(category_id, 10),
-      supplier_id ? parseInt(supplier_id, 10) : null,
-      dosage_form.trim(),
-      strength.trim(),
-      parseFloat(cost_price),
-      parseFloat(unit_price),
-      newQty,
-      parseInt(min_stock_threshold, 10),
+      cost_price: Number(cost_price),
+      unit_price: Number(unit_price),
+      quantity_in_stock: Number(quantity_in_stock) || 0,
+      min_stock_threshold: Number(min_stock_threshold) || 15,
       expiry_date,
-      batch_number.trim(),
-      requires_prescription ? 1 : 0,
-      description ? description.trim() : null,
-      id
-    );
-
-    // If stock quantity manually changed during update, log adjustment
-    if (qtyDiff !== 0) {
-      db.prepare(`
-        INSERT INTO stock_adjustments (medicine_id, type, quantity, reason)
-        VALUES (?, 'Correction', ?, 'Manual inventory update')
-      `).run(id, qtyDiff);
-    }
-
-    const updated = db.prepare('SELECT * FROM medicines WHERE id = ?').get(id);
-
-    res.json({
-      success: true,
-      message: 'Medicine record updated successfully.',
-      data: updated
+      requires_prescription: Boolean(requires_prescription),
+      description
     });
-  } catch (err) {
-    next(err);
+
+    const populated = await Medicine.findById(medicine._id)
+      .populate('category', 'name')
+      .populate('supplier', 'name');
+
+    res.status(201).json({ success: true, data: populated });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-// DELETE /api/medicines/:id - Safe deletion
-function deleteMedicine(req, res, next) {
+exports.updateMedicine = async (req, res) => {
   try {
-    const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid medicine ID.' });
-    }
+    const { cost_price, unit_price } = req.body;
 
-    const existing = db.prepare('SELECT * FROM medicines WHERE id = ?').get(id);
-    if (!existing) {
-      return res.status(404).json({ success: false, message: 'Medicine not found.' });
-    }
-
-    // Safety check: is this medicine part of existing sales invoices?
-    const salesCount = db.prepare('SELECT COUNT(*) as count FROM sale_items WHERE medicine_id = ?').get(id).count;
-    if (salesCount > 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Cannot delete '${existing.name}' because it is linked to ${salesCount} recorded transaction(s). To preserve accounting records, please adjust stock to 0 instead of deleting.`,
-        hasSales: true
-      });
-    }
-
-    // Safe to delete adjustments and medicine
-    db.prepare('DELETE FROM stock_adjustments WHERE medicine_id = ?').run(id);
-    db.prepare('DELETE FROM medicines WHERE id = ?').run(id);
-
-    res.json({
-      success: true,
-      message: `Medicine '${existing.name}' was safely removed from inventory.`,
-      data: { id, name: existing.name }
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-// POST /api/medicines/:id/stock - Quick Stock Adjustment
-function adjustStock(req, res, next) {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const { type, quantity, reason } = req.body;
-
-    if (isNaN(id)) return res.status(400).json({ success: false, message: 'Invalid medicine ID.' });
-
-    const qty = parseInt(quantity, 10);
-    if (isNaN(qty) || qty <= 0) {
-      return res.status(400).json({ success: false, message: 'Quantity must be a positive number.' });
-    }
-
-    const validTypes = ['Restock', 'Damaged', 'Expired', 'Correction'];
-    if (!validTypes.includes(type)) {
-      return res.status(400).json({ success: false, message: `Type must be one of: ${validTypes.join(', ')}` });
-    }
-
-    const medicine = db.prepare('SELECT * FROM medicines WHERE id = ?').get(id);
-    if (!medicine) return res.status(404).json({ success: false, message: 'Medicine not found.' });
-
-    let delta = qty;
-    if (['Damaged', 'Expired'].includes(type)) {
-      delta = -qty;
-      if (medicine.quantity_in_stock < qty) {
+    if (cost_price !== undefined && unit_price !== undefined) {
+      if (Number(unit_price) < Number(cost_price)) {
         return res.status(400).json({
           success: false,
-          message: `Cannot deduct ${qty} units. Current stock is only ${medicine.quantity_in_stock}.`
+          message: 'Selling price cannot be less than cost price.'
         });
       }
     }
 
-    const newStock = medicine.quantity_in_stock + delta;
+    const medicine = await Medicine.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    ).populate('category', 'name').populate('supplier', 'name');
 
-    db.transaction(() => {
-      db.prepare('UPDATE medicines SET quantity_in_stock = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(newStock, id);
-      db.prepare(`
-        INSERT INTO stock_adjustments (medicine_id, type, quantity, reason)
-        VALUES (?, ?, ?, ?)
-      `).run(id, type, delta, reason || `${type} adjustment`);
-    })();
+    if (!medicine) {
+      return res.status(404).json({ success: false, message: 'Medicine not found.' });
+    }
 
-    res.json({
-      success: true,
-      message: `Stock updated successfully. New quantity: ${newStock}`,
-      data: { id, quantity_in_stock: newStock }
-    });
-  } catch (err) {
-    next(err);
+    res.status(200).json({ success: true, data: medicine });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-module.exports = {
-  getAllMedicines,
-  getMedicineById,
-  createMedicine,
-  updateMedicine,
-  deleteMedicine,
-  adjustStock
+exports.adjustStock = async (req, res) => {
+  try {
+    const { adjustment_type, quantity, reason } = req.body;
+    const qty = parseInt(quantity, 10);
+
+    if (isNaN(qty) || qty <= 0) {
+      return res.status(400).json({ success: false, message: 'Valid positive quantity required.' });
+    }
+
+    const medicine = await Medicine.findById(req.params.id);
+    if (!medicine) {
+      return res.status(404).json({ success: false, message: 'Medicine not found.' });
+    }
+
+    let delta = qty;
+    if (['Damaged', 'Expired', 'Loss'].includes(adjustment_type)) {
+      delta = -qty;
+      if (medicine.quantity_in_stock + delta < 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Cannot reduce stock below 0. Current stock is ${medicine.quantity_in_stock}.`
+        });
+      }
+    }
+
+    medicine.quantity_in_stock += delta;
+    await medicine.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Stock successfully adjusted (${delta > 0 ? '+' : ''}${delta} units).`,
+      data: medicine
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.deleteMedicine = async (req, res) => {
+  try {
+    // Relational Integrity: Check if medicine is present in any sale invoice
+    const hasSales = await Sale.findOne({ 'items.medicine': req.params.id });
+
+    if (hasSales) {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot delete medicine: this item is linked to recorded sales invoices. Deletion is blocked to preserve financial and accounting audit integrity.'
+      });
+    }
+
+    const medicine = await Medicine.findByIdAndDelete(req.params.id);
+    if (!medicine) {
+      return res.status(404).json({ success: false, message: 'Medicine not found.' });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Medicine '${medicine.name}' safely removed from database.`
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
