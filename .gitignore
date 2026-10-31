@@ -5,3 +5,11 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 *.env.local
+
+# Submission artifacts (submitted separately via portal)
+scripts/
+*.pdf
+*report.html
+*REPORT*.md
+*SCRIPT*.md
+

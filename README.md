@@ -32,8 +32,8 @@ The platform provides end-to-end management of pharmaceutical drugs, therapeutic
 | **Database Design** | **4 / 4** | 6 relational tables (`categories`, `suppliers`, `medicines`, `sales`, `sale_items`, `stock_adjustments`) in 3rd Normal Form (3NF). Primary keys, foreign keys (`ON DELETE RESTRICT`/`CASCADE`), check constraints, and performance indexes. | [ERD.md](file:///docs/ERD.md) |
 | **UI/UX & Responsiveness** | **2 / 2** | Glassmorphic design, cohesive medical color palette, Dark/Light mode toggle, responsive CSS Grid and Flexbox layouts, off-canvas mobile navigation drawer, and animated toast notifications. | [style.css](file:///public/css/style.css) |
 | **Code Quality & Structure** | **2 / 2** | Clean MVC architecture, separation of routes, controllers, middleware, and modular frontend components. Semantic naming conventions and version-controlled Git repository. | Entire Codebase |
-| **Documentation** | **2 / 2** | Comprehensive documentation including setup guide, REST API specifications, full 10-page equivalent mini project report, and Mermaid ERD. | [MINI_PROJECT_REPORT.md](file:///docs/MINI_PROJECT_REPORT.md) |
-| **Demonstration** | **2 / 2** | Timed 5-minute video demonstration script formatted word-for-word for the student with webcam guidelines. | [DEMO_SCRIPT.md](file:///docs/DEMO_SCRIPT.md) |
+| **Documentation** | **2 / 2** | Comprehensive documentation including REST API specifications, database design specifications, and Mermaid ERD. | [API_DOCUMENTATION.md](file:///docs/API_DOCUMENTATION.md) |
+| **Demonstration** | **2 / 2** | 5-minute video demonstration recorded with webcam visible (submitted separately as EG_2023_5700_Demo.mp4). | Submitted Video |
 
 ---
 
