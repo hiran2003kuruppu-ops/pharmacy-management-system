@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <rect width="900" height="480" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect width="900" height="34" rx="8" fill="#e2e8f0"/>
+  <circle cx="20" cy="17" r="5" fill="#ef4444"/>
+  <circle cx="36" cy="17" r="5" fill="#f59e0b"/>
+  <circle cx="52" cy="17" r="5" fill="#10b981"/>
+  <rect x="80" y="7" width="400" height="20" rx="4" fill="#ffffff"/>
+  <text x="95" y="21" fill="#64748b" font-size="10.5">http://localhost:3000/#pos</text>
+
+  <!-- Left: Medicine Catalog Cards (Grid of drugs) -->
+  <g transform="translate(30, 50)">
+    <rect width="520" height="410" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="18" y="26" font-size="12" font-weight="bold" fill="#0f172a">Medicine Catalog</text>
+    <rect x="300" y="10" width="200" height="24" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="310" y="26" font-size="9.5" fill="#94a3b8">&#128269; Quick search drug...</text>
+
+    <!-- Drug Card 1 -->
+    <g transform="translate(18, 48)">
+      <rect width="155" height="105" rx="6" fill="#f8fafc" stroke="#0d9488" stroke-width="1.5"/>
+      <text x="10" y="18" font-size="8.5" fill="#64748b">MED-1001</text>
+      <rect x="120" y="8" width="24" height="15" rx="3" fill="#fee2e2"/>
+      <text x="132" y="19" font-size="8" font-weight="bold" fill="#b91c1c" text-anchor="middle">Rx</text>
+      <text x="10" y="38" font-size="10" font-weight="bold" fill="#0f172a">Amoxicillin</text>
+      <text x="10" y="52" font-size="8.5" fill="#64748b">Capsule &bull; 500mg</text>
+      <line x1="10" y1="68" x2="145" y2="68" stroke="#e2e8f0"/>
+      <text x="10" y="88" font-size="12" font-weight="bold" fill="#0d9488">Rs. 480.00</text>
+      <text x="85" y="88" font-size="8.5" fill="#10b981">120 in stock</text>
+    </g>
+
+    <!-- Drug Card 2 -->
+    <g transform="translate(183, 48)">
+      <rect width="155" height="105" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="10" y="18" font-size="8.5" fill="#64748b">MED-1002</text>
+      <text x="10" y="38" font-size="10" font-weight="bold" fill="#0f172a">Paracetamol Extra</text>
+      <text x="10" y="52" font-size="8.5" fill="#64748b">Tablet &bull; 500mg</text>
+      <line x1="10" y1="68" x2="145" y2="68" stroke="#e2e8f0"/>
+      <text x="10" y="88" font-size="12" font-weight="bold" fill="#0d9488">Rs. 60.00</text>
+      <text x="85" y="88" font-size="8.5" fill="#10b981">450 in stock</text>
+    </g>
+
+    <!-- Drug Card 3 -->
+    <g transform="translate(348, 48)">
+      <rect width="155" height="105" rx="6" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="10" y="18" font-size="8.5" fill="#64748b">MED-1008</text>
+      <rect x="120" y="8" width="24" height="15" rx="3" fill="#fee2e2"/>
+      <text x="132" y="19" font-size="8" font-weight="bold" fill="#b91c1c" text-anchor="middle">Rx</text>
+      <text x="10" y="38" font-size="10" font-weight="bold" fill="#0f172a">Ventolin Inhaler</text>
+      <text x="10" y="52" font-size="8.5" fill="#64748b">Inhaler &bull; 100mcg</text>
+      <line x1="10" y1="68" x2="145" y2="68" stroke="#e2e8f0"/>
+      <text x="10" y="88" font-size="12" font-weight="bold" fill="#0d9488">Rs. 1,450.00</text>
+      <text x="85" y="88" font-size="8.5" fill="#10b981">45 in stock</text>
+    </g>
+  </g>
+
+  <!-- Right: Cart & Customer Info (POS Order) -->
+  <g transform="translate(570, 50)">
+    <rect width="300" height="410" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="18" y="26" font-size="12" font-weight="bold" fill="#0f172a">&#128722; Current Dispensing Order</text>
+
+    <!-- Customer Form Box -->
+    <rect x="15" y="40" width="270" height="85" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="25" y="58" font-size="9" font-weight="bold" fill="#1e293b">Customer Name <tspan fill="#ef4444">*</tspan></text>
+    <rect x="25" y="63" width="250" height="20" rx="4" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="32" y="77" font-size="9.5" fill="#0f172a">Sunil Perera</text>
+
+    <text x="25" y="96" font-size="9" font-weight="bold" fill="#b91c1c">Doctor Rx ID <tspan fill="#ef4444">* Required for Amoxicillin</tspan></text>
+    <rect x="25" y="100" width="250" height="20" rx="4" fill="#ffffff" stroke="#b91c1c"/>
+    <text x="32" y="114" font-size="9.5" fill="#0f172a">RX-2026-9921</text>
+
+    <!-- Cart Items -->
+    <g transform="translate(15, 135)">
+      <rect width="270" height="40" fill="#f8fafc" stroke="#e2e8f0"/>
+      <text x="10" y="17" font-size="10" font-weight="bold" fill="#0f172a">Amoxicillin 500mg</text>
+      <text x="10" y="30" font-size="8.5" fill="#64748b">Rs. 480.00 each</text>
+      <text x="175" y="25" font-size="10.5" font-weight="bold" fill="#0f172a">Qty: 2</text>
+      <text x="220" y="25" font-size="11" font-weight="bold" fill="#0d9488">Rs. 960</text>
+    </g>
+
+    <!-- Bill Summary -->
+    <g transform="translate(15, 230)">
+      <text x="10" y="20" font-size="10" fill="#64748b">Subtotal:</text>
+      <text x="260" y="20" font-size="10.5" font-weight="bold" fill="#0f172a" text-anchor="end">Rs. 960.00</text>
+
+      <text x="10" y="42" font-size="10" fill="#10b981">Discount (5%):</text>
+      <text x="260" y="42" font-size="10.5" font-weight="bold" fill="#10b981" text-anchor="end">-Rs. 48.00</text>
+
+      <text x="10" y="64" font-size="10" fill="#64748b">Payment Method:</text>
+      <text x="260" y="64" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="end">Credit/Debit Card</text>
+
+      <line x1="5" y1="78" x2="265" y2="78" stroke="#0f172a" stroke-width="1.5"/>
+      <text x="10" y="98" font-size="12" font-weight="bold" fill="#0f172a">GRAND TOTAL:</text>
+      <text x="260" y="98" font-size="14" font-weight="bold" fill="#0d9488" text-anchor="end">Rs. 912.00</text>
+    </g>
+
+    <!-- Checkout Button -->
+    <rect x="15" y="355" width="270" height="36" rx="6" fill="#0d9488"/>
+    <text x="150" y="377" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">&#10004; Complete Dispensation &amp; Print</text>
+  </g>
+</svg>

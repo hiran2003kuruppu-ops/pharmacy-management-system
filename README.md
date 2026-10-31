@@ -1,5 +1,9 @@
 # 🏥 PharmaCare Pro - Web-Based Pharmacy Management System
 ### EE4207 Web Application Development Mini Project
+**Student Name:** K.A.H.B. Kuruppu  
+**Student Registration Number / Index:** EG/2023/5700  
+**Department:** Department of Electrical and Information Engineering  
+**Faculty:** Faculty of Engineering, University of Ruhuna, Sri Lanka  
 
 ![Node.js](https://img.shields.io/badge/Node.js-v24+-green.svg)
 ![Express](https://img.shields.io/badge/Express-v5.0-blue.svg)

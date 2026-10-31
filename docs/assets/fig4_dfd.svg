@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+
+  <!-- Left Entity: Customer / Patient & Staff Pharmacist -->
+  <g transform="translate(30, 60)">
+    <rect width="130" height="70" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <text x="65" y="32" fill="#0369a1" font-size="11" font-weight="bold" text-anchor="middle">Customer /</text>
+    <text x="65" y="48" fill="#0369a1" font-size="11" font-weight="bold" text-anchor="middle">Staff Pharmacist</text>
+  </g>
+
+  <!-- Left Entity: Pharmacy Admin / Manager -->
+  <g transform="translate(30, 240)">
+    <rect width="130" height="70" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+    <text x="65" y="32" fill="#0f766e" font-size="11" font-weight="bold" text-anchor="middle">Pharmacy</text>
+    <text x="65" y="48" fill="#0f766e" font-size="11" font-weight="bold" text-anchor="middle">Admin / Manager</text>
+  </g>
+
+  <!-- Process 1.0: Search and Filter Inventory -->
+  <g transform="translate(250, 40)">
+    <rect width="170" height="60" rx="12" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <text x="85" y="27" fill="#0284c7" font-size="10.5" font-weight="bold" text-anchor="middle">1.0 Search &amp; Filter</text>
+    <text x="85" y="43" fill="#1e293b" font-size="9.5" text-anchor="middle">Medicines Catalog</text>
+  </g>
+
+  <!-- Process 2.0: POS Dispensing Workflow -->
+  <g transform="translate(250, 150)">
+    <rect width="170" height="65" rx="12" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+    <text x="85" y="26" fill="#d97706" font-size="10.5" font-weight="bold" text-anchor="middle">2.0 POS Dispensing</text>
+    <text x="85" y="42" fill="#1e293b" font-size="9.5" text-anchor="middle">&amp; Rx Validation</text>
+  </g>
+
+  <!-- Process 3.0: Inventory & Supplier Management (CRUD) -->
+  <g transform="translate(250, 260)">
+    <rect width="170" height="60" rx="12" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+    <text x="85" y="27" fill="#0f766e" font-size="10.5" font-weight="bold" text-anchor="middle">3.0 Inventory &amp; Stock</text>
+    <text x="85" y="43" fill="#1e293b" font-size="9.5" text-anchor="middle">Management (CRUD)</text>
+  </g>
+
+  <!-- Data Store D1: Medicines Store -->
+  <g transform="translate(540, 50)">
+    <line x1="0" y1="0" x2="160" y2="0" stroke="#0284c7" stroke-width="2"/>
+    <line x1="0" y1="45" x2="160" y2="45" stroke="#0284c7" stroke-width="2"/>
+    <text x="25" y="28" fill="#0284c7" font-size="11" font-weight="bold">D1</text>
+    <line x1="45" y1="5" x2="45" y2="40" stroke="#94a3b8" stroke-width="1"/>
+    <text x="100" y="28" fill="#1e293b" font-size="10.5" font-weight="600" text-anchor="middle">Medicines Store</text>
+  </g>
+
+  <!-- Data Store D2: Sales Invoices Store -->
+  <g transform="translate(540, 160)">
+    <line x1="0" y1="0" x2="160" y2="0" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="0" y1="45" x2="160" y2="45" stroke="#f59e0b" stroke-width="2"/>
+    <text x="25" y="28" fill="#d97706" font-size="11" font-weight="bold">D2</text>
+    <line x1="45" y1="5" x2="45" y2="40" stroke="#94a3b8" stroke-width="1"/>
+    <text x="100" y="28" fill="#1e293b" font-size="10.5" font-weight="600" text-anchor="middle">Sales Invoices</text>
+  </g>
+
+  <!-- Data Store D3: Stock Audit Adjustments Store -->
+  <g transform="translate(540, 270)">
+    <line x1="0" y1="0" x2="160" y2="0" stroke="#ec4899" stroke-width="2"/>
+    <line x1="0" y1="45" x2="160" y2="45" stroke="#ec4899" stroke-width="2"/>
+    <text x="25" y="28" fill="#db2777" font-size="11" font-weight="bold">D3</text>
+    <line x1="45" y1="5" x2="45" y2="40" stroke="#94a3b8" stroke-width="1"/>
+    <text x="100" y="28" fill="#1e293b" font-size="10.5" font-weight="600" text-anchor="middle">Stock Audit Logs</text>
+  </g>
+
+  <!-- Data Flow Arrows -->
+  <!-- Entity to 1.0 -->
+  <line x1="160" y1="70" x2="250" y2="70" stroke="#64748b" stroke-width="1.5"/>
+  <text x="205" y="63" fill="#64748b" font-size="8.5" text-anchor="middle">search query</text>
+
+  <!-- 1.0 to D1 -->
+  <line x1="420" y1="70" x2="540" y2="70" stroke="#64748b" stroke-width="1.5"/>
+  <text x="480" y="63" fill="#64748b" font-size="8.5" text-anchor="middle">query/match</text>
+
+  <!-- Entity to 2.0 -->
+  <line x1="160" y1="110" x2="250" y2="170" stroke="#64748b" stroke-width="1.5"/>
+  <text x="195" y="145" fill="#64748b" font-size="8.5">Rx &amp; items</text>
+
+  <!-- 2.0 to D1 (stock decrement) -->
+  <line x1="390" y1="150" x2="540" y2="85" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="475" y="115" fill="#ef4444" font-size="8.5">decrement stock</text>
+
+  <!-- 2.0 to D2 (write sale) -->
+  <line x1="420" y1="180" x2="540" y2="180" stroke="#64748b" stroke-width="1.5"/>
+  <text x="480" y="173" fill="#64748b" font-size="8.5" text-anchor="middle">record invoice</text>
+
+  <!-- 2.0 to Entity (print receipt) -->
+  <line x1="250" y1="190" x2="160" y2="120" stroke="#10b981" stroke-width="1.5"/>
+  <text x="190" y="180" fill="#10b981" font-size="8.5">receipt (Rs.)</text>
+
+  <!-- Admin to 3.0 -->
+  <line x1="160" y1="290" x2="250" y2="290" stroke="#64748b" stroke-width="1.5"/>
+  <text x="205" y="283" fill="#64748b" font-size="8.5" text-anchor="middle">drug/CRUD data</text>
+
+  <!-- 3.0 to D1 -->
+  <line x1="380" y1="260" x2="540" y2="90" stroke="#64748b" stroke-width="1.5"/>
+  <text x="440" y="200" fill="#64748b" font-size="8.5">insert/update</text>
+
+  <!-- 3.0 to D3 -->
+  <line x1="420" y1="290" x2="540" y2="290" stroke="#64748b" stroke-width="1.5"/>
+  <text x="480" y="283" fill="#64748b" font-size="8.5" text-anchor="middle">audit record</text>
+</svg>

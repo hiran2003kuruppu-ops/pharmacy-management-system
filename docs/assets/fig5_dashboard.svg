@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <!-- Browser Window Frame -->
+  <rect width="900" height="500" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect width="900" height="34" rx="8" fill="#e2e8f0"/>
+  <!-- Browser Circles -->
+  <circle cx="20" cy="17" r="5" fill="#ef4444"/>
+  <circle cx="36" cy="17" r="5" fill="#f59e0b"/>
+  <circle cx="52" cy="17" r="5" fill="#10b981"/>
+  <!-- URL Bar -->
+  <rect x="80" y="7" width="400" height="20" rx="4" fill="#ffffff"/>
+  <text x="95" y="21" fill="#64748b" font-size="10.5">http://localhost:3000/#dashboard</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="34" width="180" height="466" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <!-- Logo -->
+  <rect x="15" y="48" width="28" height="28" rx="6" fill="#0d9488"/>
+  <text x="29" y="66" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">&#10010;</text>
+  <text x="50" y="60" fill="#0f172a" font-size="12" font-weight="bold">PharmaCare</text>
+  <text x="50" y="71" fill="#0d9488" font-size="8.5" font-weight="600">MANAGEMENT SUITE</text>
+
+  <!-- Nav Items -->
+  <rect x="10" y="90" width="160" height="28" rx="6" fill="#ccfbf1"/>
+  <text x="24" y="108" fill="#0d9488" font-size="11" font-weight="bold">&#9632; Dashboard</text>
+  <text x="24" y="136" fill="#64748b" font-size="11">&#9679; Medicines Inventory</text>
+  <text x="24" y="164" fill="#64748b" font-size="11">&#9679; Point of Sale (POS)</text>
+  <text x="24" y="192" fill="#64748b" font-size="11">&#9679; Sales &amp; Invoices</text>
+  <text x="24" y="220" fill="#64748b" font-size="11">&#9679; Drug Categories</text>
+  <text x="24" y="248" fill="#64748b" font-size="11">&#9679; Suppliers Directory</text>
+  <text x="24" y="276" fill="#64748b" font-size="11">&#9679; Audit &amp; Expiry</text>
+
+  <!-- Main Content Header -->
+  <text x="205" y="65" fill="#0f172a" font-size="16" font-weight="bold">Dashboard</text>
+  <text x="205" y="80" fill="#64748b" font-size="10.5">Overview of pharmacy inventory, metrics and alerts</text>
+  <rect x="760" y="52" width="115" height="28" rx="6" fill="#0d9488"/>
+  <text x="817" y="70" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">+ Add Medicine</text>
+
+  <!-- 4 KPI Cards -->
+  <!-- Card 1 -->
+  <g transform="translate(205, 95)">
+    <rect width="155" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="10" y="14" width="32" height="32" rx="6" fill="#dbeafe"/>
+    <text x="26" y="34" fill="#2563eb" font-size="14" text-anchor="middle">&#128138;</text>
+    <text x="50" y="26" fill="#64748b" font-size="9" font-weight="bold">TOTAL MEDICINES</text>
+    <text x="50" y="46" fill="#0f172a" font-size="17" font-weight="bold">12</text>
+    <text x="50" y="59" fill="#2563eb" font-size="8.5">1,591 units in stock</text>
+  </g>
+
+  <!-- Card 2 -->
+  <g transform="translate(372, 95)">
+    <rect width="155" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="10" y="14" width="32" height="32" rx="6" fill="#d1fae5"/>
+    <text x="26" y="34" fill="#10b981" font-size="14" text-anchor="middle">&#128176;</text>
+    <text x="50" y="26" fill="#64748b" font-size="9" font-weight="bold">INVENTORY VALUE</text>
+    <text x="50" y="46" fill="#0f172a" font-size="15" font-weight="bold">Rs. 434,800.00</text>
+    <text x="50" y="59" fill="#10b981" font-size="8.5">Cost: Rs. 272,360.00</text>
+  </g>
+
+  <!-- Card 3 -->
+  <g transform="translate(539, 95)">
+    <rect width="155" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="10" y="14" width="32" height="32" rx="6" fill="#fef3c7"/>
+    <text x="26" y="34" fill="#f59e0b" font-size="14" text-anchor="middle">&#9888;</text>
+    <text x="50" y="26" fill="#64748b" font-size="9" font-weight="bold">LOW STOCK ITEMS</text>
+    <text x="50" y="46" fill="#0f172a" font-size="17" font-weight="bold">2</text>
+    <text x="50" y="59" fill="#f59e0b" font-size="8.5">Require replenishment</text>
+  </g>
+
+  <!-- Card 4 -->
+  <g transform="translate(706, 95)">
+    <rect width="168" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="10" y="14" width="32" height="32" rx="6" fill="#fee2e2"/>
+    <text x="26" y="34" fill="#ef4444" font-size="14" text-anchor="middle">&#10006;</text>
+    <text x="50" y="26" fill="#64748b" font-size="9" font-weight="bold">EXPIRED / SOON</text>
+    <text x="50" y="46" fill="#0f172a" font-size="17" font-weight="bold">3</text>
+    <text x="50" y="59" fill="#ef4444" font-size="8.5">1 Expired, 2 Near Expiry</text>
+  </g>
+
+  <!-- Charts Row -->
+  <!-- Doughnut Chart Box -->
+  <g transform="translate(205, 180)">
+    <rect width="325" height="150" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="15" y="22" fill="#0f172a" font-size="11.5" font-weight="bold">Inventory by Category</text>
+    <!-- Simplified donut -->
+    <circle cx="95" cy="85" r="45" fill="none" stroke="#0d9488" stroke-width="18" stroke-dasharray="140, 280"/>
+    <circle cx="95" cy="85" r="45" fill="none" stroke="#0284c7" stroke-width="18" stroke-dasharray="70, 280" stroke-dashoffset="-140"/>
+    <circle cx="95" cy="85" r="45" fill="none" stroke="#f59e0b" stroke-width="18" stroke-dasharray="45, 280" stroke-dashoffset="-210"/>
+    <circle cx="95" cy="85" r="45" fill="none" stroke="#8b5cf6" stroke-width="18" stroke-dasharray="25, 280" stroke-dashoffset="-255"/>
+    <!-- Legend -->
+    <text x="175" y="60" font-size="9.5" fill="#1e293b">&#9632; Antibiotics (3)</text>
+    <text x="175" y="78" font-size="9.5" fill="#1e293b">&#9632; Analgesics (2)</text>
+    <text x="175" y="96" font-size="9.5" fill="#1e293b">&#9632; Cardiovascular (2)</text>
+    <text x="175" y="114" font-size="9.5" fill="#1e293b">&#9632; Respiratory (2)</text>
+  </g>
+
+  <!-- Line Chart Box -->
+  <g transform="translate(545, 180)">
+    <rect width="329" height="150" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="15" y="22" fill="#0f172a" font-size="11.5" font-weight="bold">Sales Revenue Trend (7 Days)</text>
+    <!-- Line curve -->
+    <path d="M 30 110 Q 75 90, 110 98 T 170 85 T 230 65 T 290 50" fill="none" stroke="#10b981" stroke-width="2.5"/>
+    <path d="M 30 110 Q 75 90, 110 98 T 170 85 T 230 65 T 290 50 L 290 130 L 30 130 Z" fill="#10b981" fill-opacity="0.12"/>
+    <circle cx="110" cy="98" r="3" fill="#10b981"/>
+    <circle cx="170" cy="85" r="3" fill="#10b981"/>
+    <circle cx="230" cy="65" r="3" fill="#10b981"/>
+    <circle cx="290" cy="50" r="3" fill="#10b981"/>
+    <text x="30" y="142" font-size="8.5" fill="#94a3b8">Oct 24</text>
+    <text x="110" y="142" font-size="8.5" fill="#94a3b8">Oct 26</text>
+    <text x="190" y="142" font-size="8.5" fill="#94a3b8">Oct 28</text>
+    <text x="270" y="142" font-size="8.5" fill="#94a3b8">Oct 30</text>
+  </g>
+
+  <!-- Priority Attention Table -->
+  <g transform="translate(205, 342)">
+    <rect width="669" height="142" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="15" y="22" fill="#0f172a" font-size="11.5" font-weight="bold">&#9888; Priority Attention Items</text>
+    <!-- Table Headers -->
+    <rect x="15" y="32" width="639" height="20" fill="#f1f5f9"/>
+    <text x="25" y="46" font-size="9" font-weight="bold" fill="#64748b">SKU</text>
+    <text x="95" y="46" font-size="9" font-weight="bold" fill="#64748b">MEDICINE NAME</text>
+    <text x="270" y="46" font-size="9" font-weight="bold" fill="#64748b">STOCK LEVEL</text>
+    <text x="390" y="46" font-size="9" font-weight="bold" fill="#64748b">EXPIRY</text>
+    <text x="490" y="46" font-size="9" font-weight="bold" fill="#64748b">STATUS ALERT</text>
+    <text x="590" y="46" font-size="9" font-weight="bold" fill="#64748b">ACTION</text>
+
+    <!-- Row 1 -->
+    <text x="25" y="70" font-size="9.5" fill="#0284c7">MED-1012</text>
+    <text x="95" y="70" font-size="9.5" font-weight="bold" fill="#0f172a">Ciprofloxacin Drops</text>
+    <text x="270" y="70" font-size="9.5" fill="#ef4444">12 units</text>
+    <text x="390" y="70" font-size="9.5" fill="#ef4444">2026-08-10</text>
+    <rect x="485" y="58" width="68" height="17" rx="9" fill="#fee2e2"/>
+    <text x="519" y="70" font-size="8.5" font-weight="bold" fill="#ef4444" text-anchor="middle">EXPIRED</text>
+    <rect x="585" y="58" width="55" height="17" rx="4" fill="#0d9488"/>
+    <text x="612" y="70" font-size="8.5" fill="#ffffff" font-weight="bold" text-anchor="middle">Quarantine</text>
+
+    <!-- Row 2 -->
+    <text x="25" y="98" font-size="9.5" fill="#0284c7">MED-1010</text>
+    <text x="95" y="98" font-size="9.5" font-weight="bold" fill="#0f172a">Azithromycin 500mg</text>
+    <text x="270" y="98" font-size="9.5" fill="#ef4444">0 units (Out)</text>
+    <text x="390" y="98" font-size="9.5" fill="#64748b">2028-10-15</text>
+    <rect x="485" y="86" width="75" height="17" rx="9" fill="#fee2e2"/>
+    <text x="522" y="98" font-size="8.5" font-weight="bold" fill="#ef4444" text-anchor="middle">OUT OF STOCK</text>
+    <rect x="585" y="86" width="55" height="17" rx="4" fill="#0f766e"/>
+    <text x="612" y="98" font-size="8.5" fill="#ffffff" font-weight="bold" text-anchor="middle">Restock</text>
+
+    <!-- Row 3 -->
+    <text x="25" y="126" font-size="9.5" fill="#0284c7">MED-1005</text>
+    <text x="95" y="126" font-size="9.5" font-weight="bold" fill="#0f172a">Amlodipine Besylate</text>
+    <text x="270" y="126" font-size="9.5" fill="#f59e0b">6 units (&le;20)</text>
+    <text x="390" y="126" font-size="9.5" fill="#f59e0b">In 14 days</text>
+    <rect x="485" y="114" width="75" height="17" rx="9" fill="#fef3c7"/>
+    <text x="522" y="126" font-size="8.5" font-weight="bold" fill="#f59e0b" text-anchor="middle">LOW STOCK</text>
+    <rect x="585" y="114" width="55" height="17" rx="4" fill="#0f766e"/>
+    <text x="612" y="126" font-size="8.5" fill="#ffffff" font-weight="bold" text-anchor="middle">Restock</text>
+  </g>
+</svg>

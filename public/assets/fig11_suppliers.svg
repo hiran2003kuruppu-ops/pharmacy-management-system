@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <rect width="900" height="420" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect width="900" height="34" rx="8" fill="#e2e8f0"/>
+  <circle cx="20" cy="17" r="5" fill="#ef4444"/>
+  <circle cx="36" cy="17" r="5" fill="#f59e0b"/>
+  <circle cx="52" cy="17" r="5" fill="#10b981"/>
+  <rect x="80" y="7" width="400" height="20" rx="4" fill="#ffffff"/>
+  <text x="95" y="21" fill="#64748b" font-size="10.5">http://localhost:3000/#suppliers</text>
+
+  <!-- Title & Add Button -->
+  <text x="30" y="66" font-size="14" font-weight="bold" fill="#0f172a">Pharmaceutical Suppliers &amp; Distributors</text>
+  <rect x="740" y="48" width="130" height="28" rx="6" fill="#0d9488"/>
+  <text x="805" y="66" fill="#ffffff" font-size="10.5" font-weight="bold" text-anchor="middle">+ Add Supplier</text>
+
+  <!-- Supplier Cards Grid -->
+  <!-- Card 1: State Pharmaceuticals Corporation -->
+  <g transform="translate(30, 90)">
+    <rect width="405" height="140" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="18" y="28" font-size="12" font-weight="bold" fill="#0f172a">State Pharmaceuticals Corp (SPC)</text>
+    <rect x="290" y="14" width="95" height="18" rx="9" fill="#ccfbf1"/>
+    <text x="337" y="27" font-size="8.5" font-weight="bold" fill="#0f766e" text-anchor="middle">5 Active Products</text>
+
+    <text x="18" y="52" font-size="9.5" fill="#64748b">Contact Person: <tspan fill="#1e293b" font-weight="600">Dr. Kamal Perera</tspan></text>
+    <text x="18" y="70" font-size="9.5" fill="#64748b">Phone: <tspan fill="#0284c7" font-weight="600">+94-11-232-0356</tspan></text>
+    <text x="18" y="88" font-size="9.5" fill="#64748b">Email: <tspan fill="#1e293b">orders@spc.lk</tspan></text>
+    <text x="18" y="106" font-size="9.5" fill="#64748b">Address: 75 Sir Baron Jayathilaka Mawatha, Colombo 01</text>
+    <line x1="0" y1="118" x2="405" y2="118" stroke="#f1f5f9"/>
+    <text x="18" y="132" font-size="8.5" fill="#94a3b8">Registered: 2026-10-20 &bull; Authorized Distributor</text>
+  </g>
+
+  <!-- Card 2: Hemas Pharmaceuticals -->
+  <g transform="translate(465, 90)">
+    <rect width="405" height="140" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="18" y="28" font-size="12" font-weight="bold" fill="#0f172a">Hemas Pharmaceuticals (Pvt) Ltd</text>
+    <rect x="290" y="14" width="95" height="18" rx="9" fill="#ccfbf1"/>
+    <text x="337" y="27" font-size="8.5" font-weight="bold" fill="#0f766e" text-anchor="middle">4 Active Products</text>
+
+    <text x="18" y="52" font-size="9.5" fill="#64748b">Contact Person: <tspan fill="#1e293b" font-weight="600">Nimali Fernando</tspan></text>
+    <text x="18" y="70" font-size="9.5" fill="#64748b">Phone: <tspan fill="#0284c7" font-weight="600">+94-11-473-1000</tspan></text>
+    <text x="18" y="88" font-size="9.5" fill="#64748b">Email: <tspan fill="#1e293b">pharma@hemas.com</tspan></text>
+    <text x="18" y="106" font-size="9.5" fill="#64748b">Address: Hemas House, 75 Braybrooke Place, Colombo 02</text>
+    <line x1="0" y1="118" x2="405" y2="118" stroke="#f1f5f9"/>
+    <text x="18" y="132" font-size="8.5" fill="#94a3b8">Registered: 2026-10-21 &bull; Authorized Distributor</text>
+  </g>
+
+  <!-- Category Management Strip -->
+  <g transform="translate(30, 250)">
+    <text x="0" y="22" font-size="13" font-weight="bold" fill="#0f172a">Active Drug Classifications</text>
+    <!-- Cat Pill 1 -->
+    <rect x="0" y="35" width="200" height="110" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="15" y="58" font-size="11" font-weight="bold" fill="#0f172a">Antibiotics &amp; Antimicrobials</text>
+    <rect x="15" y="66" width="90" height="18" rx="9" fill="#dbeafe"/>
+    <text x="60" y="79" font-size="8.5" font-weight="bold" fill="#1d4ed8" text-anchor="middle">3 Registered Drugs</text>
+    <text x="15" y="105" font-size="8.5" fill="#64748b">Beta-lactams, macrolides, fluoroquinolones</text>
+    <text x="15" y="125" font-size="9" font-weight="bold" fill="#0d9488">132 Units in stock</text>
+
+    <!-- Cat Pill 2 -->
+    <rect x="220" y="35" width="200" height="110" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="235" y="58" font-size="11" font-weight="bold" fill="#0f172a">Analgesics &amp; Pain Relief</text>
+    <rect x="235" y="66" width="90" height="18" rx="9" fill="#dbeafe"/>
+    <text x="280" y="79" font-size="8.5" font-weight="bold" fill="#1d4ed8" text-anchor="middle">2 Registered Drugs</text>
+    <text x="235" y="105" font-size="8.5" fill="#64748b">Paracetamol, NSAIDs, fever reducers</text>
+    <text x="235" y="125" font-size="9" font-weight="bold" fill="#0d9488">468 Units in stock</text>
+
+    <!-- Cat Pill 3 -->
+    <rect x="440" y="35" width="200" height="110" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="455" y="58" font-size="11" font-weight="bold" fill="#0f172a">Cardiovascular</text>
+    <rect x="455" y="66" width="90" height="18" rx="9" fill="#dbeafe"/>
+    <text x="500" y="79" font-size="8.5" font-weight="bold" fill="#1d4ed8" text-anchor="middle">2 Registered Drugs</text>
+    <text x="455" y="105" font-size="8.5" fill="#64748b">Antihypertensives, statins, beta blockers</text>
+    <text x="455" y="125" font-size="9" font-weight="bold" fill="#0d9488">71 Units in stock</text>
+
+    <!-- Cat Pill 4 -->
+    <rect x="660" y="35" width="180" height="110" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="675" y="58" font-size="11" font-weight="bold" fill="#0f172a">Respiratory &amp; Allergy</text>
+    <rect x="675" y="66" width="90" height="18" rx="9" fill="#dbeafe"/>
+    <text x="720" y="79" font-size="8.5" font-weight="bold" fill="#1d4ed8" text-anchor="middle">2 Registered Drugs</text>
+    <text x="675" y="105" font-size="8.5" fill="#64748b">Inhalers, antihistamines</text>
+    <text x="675" y="125" font-size="9" font-weight="bold" fill="#0d9488">255 Units in stock</text>
+  </g>
+</svg>

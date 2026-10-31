@@ -6,9 +6,13 @@
 # PHARMACARE PRO: WEB-BASED PHARMACY INVENTORY AND POINT OF SALE (POS) MANAGEMENT SYSTEM
 
 **Course Code:** EE4207 - Web Application Development  
-**Project Topic:** Pharmacy Management System  
-**Submission Date:** October 2026  
-**Technology Stack:** Node.js, Express.js, SQLite3 (`better-sqlite3`), HTML5, CSS3, Vanilla JavaScript, Chart.js  
+**Department:** Department of Electrical and Information Engineering  
+**Faculty:** Faculty of Engineering, University of Ruhuna, Sri Lanka  
+**Student Name:** K.A.H.B. Kuruppu  
+**Student Registration Number / Index:** EG/2023/5700  
+**Project Topic:** Pharmacy Management System (PharmaCare Pro)  
+**Submission Date:** 31st of October 2026  
+**Technology Stack:** Node.js 24, Express 5.0, SQLite3 (`better-sqlite3`), HTML5, CSS3, Vanilla JavaScript, Chart.js  
 
 ---
 

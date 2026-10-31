@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <rect width="720" height="420" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <!-- Header -->
+  <rect width="720" height="50" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="20" y="12" width="26" height="26" rx="6" fill="#ccfbf1"/>
+  <text x="33" y="30" fill="#0d9488" font-size="14" text-anchor="middle">&#128138;</text>
+  <text x="55" y="27" font-size="13" font-weight="bold" fill="#0f172a">Amoxicillin Trihydrate</text>
+  <text x="55" y="42" font-size="9.5" fill="#64748b">Amoxicillin &bull; 500mg (Capsule)</text>
+  <text x="690" y="32" font-size="16" fill="#94a3b8">&#10006;</text>
+
+  <!-- Spec Grid (8 items) -->
+  <g transform="translate(30, 70)">
+    <rect x="0" y="0" width="150" height="48" rx="6" fill="#f8fafc"/>
+    <text x="12" y="18" font-size="8.5" font-weight="bold" fill="#64748b">SKU / BARCODE</text>
+    <text x="12" y="36" font-size="11" font-weight="bold" fill="#0284c7">MED-1001</text>
+
+    <rect x="165" y="0" width="170" height="48" rx="6" fill="#f8fafc"/>
+    <text x="177" y="18" font-size="8.5" font-weight="bold" fill="#64748b">CATEGORY</text>
+    <text x="177" y="36" font-size="10.5" font-weight="bold" fill="#0f172a">Antibiotics</text>
+
+    <rect x="350" y="0" width="150" height="48" rx="6" fill="#f8fafc"/>
+    <text x="362" y="18" font-size="8.5" font-weight="bold" fill="#64748b">SELLING PRICE</text>
+    <text x="362" y="36" font-size="11" font-weight="bold" fill="#0d9488">Rs. 480.00</text>
+
+    <rect x="515" y="0" width="145" height="48" rx="6" fill="#f8fafc"/>
+    <text x="527" y="18" font-size="8.5" font-weight="bold" fill="#64748b">COST PRICE</text>
+    <text x="527" y="36" font-size="11" font-weight="bold" fill="#64748b">Rs. 320.00</text>
+  </g>
+
+  <g transform="translate(30, 130)">
+    <rect x="0" y="0" width="150" height="48" rx="6" fill="#f8fafc"/>
+    <text x="12" y="18" font-size="8.5" font-weight="bold" fill="#64748b">CURRENT STOCK</text>
+    <text x="12" y="36" font-size="11" font-weight="bold" fill="#10b981">120 Units</text>
+
+    <rect x="165" y="0" width="170" height="48" rx="6" fill="#f8fafc"/>
+    <text x="177" y="18" font-size="8.5" font-weight="bold" fill="#64748b">BATCH &amp; EXPIRY</text>
+    <text x="177" y="36" font-size="10.5" font-weight="bold" fill="#0f172a">AMX-2026-B1 (2028-10)</text>
+
+    <rect x="350" y="0" width="150" height="48" rx="6" fill="#f8fafc"/>
+    <text x="362" y="18" font-size="8.5" font-weight="bold" fill="#64748b">REGULATION</text>
+    <text x="362" y="36" font-size="10.5" font-weight="bold" fill="#b91c1c">Prescription (Rx)</text>
+
+    <rect x="515" y="0" width="145" height="48" rx="6" fill="#f8fafc"/>
+    <text x="527" y="18" font-size="8.5" font-weight="bold" fill="#64748b">SUPPLIER</text>
+    <text x="527" y="36" font-size="10" font-weight="bold" fill="#0f766e">SPC Sri Lanka</text>
+  </g>
+
+  <!-- Audit Trail Header -->
+  <text x="30" y="210" font-size="11" font-weight="bold" fill="#0d9488">AUDIT TRAIL: RECENT STOCK MOVEMENTS</text>
+  <rect x="30" y="222" width="660" height="135" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+  <!-- Table Header -->
+  <rect x="30" y="222" width="660" height="24" rx="6" fill="#f1f5f9"/>
+  <text x="45" y="238" font-size="9" font-weight="bold" fill="#64748b">DATE &amp; TIME</text>
+  <text x="210" y="238" font-size="9" font-weight="bold" fill="#64748b">ADJUSTMENT TYPE</text>
+  <text x="360" y="238" font-size="9" font-weight="bold" fill="#64748b">QUANTITY UNITS</text>
+  <text x="500" y="238" font-size="9" font-weight="bold" fill="#64748b">REASON / NOTE</text>
+
+  <!-- Row 1 -->
+  <line x1="30" y1="275" x2="690" y2="275" stroke="#f1f5f9"/>
+  <text x="45" y="265" font-size="9.5" fill="#475569">2026-10-30 14:22:00</text>
+  <text x="210" y="265" font-size="9.5" fill="#0284c7" font-weight="600">Dispensed (POS)</text>
+  <text x="360" y="265" font-size="9.5" fill="#ef4444" font-weight="bold">-2 Units</text>
+  <text x="500" y="265" font-size="9.5" fill="#64748b">Sale Invoice INV-20261028-001</text>
+
+  <!-- Row 2 -->
+  <line x1="30" y1="305" x2="690" y2="305" stroke="#f1f5f9"/>
+  <text x="45" y="295" font-size="9.5" fill="#475569">2026-10-30 05:00:00</text>
+  <text x="210" y="295" font-size="9.5" fill="#10b981" font-weight="600">Restock (Shipment)</text>
+  <text x="360" y="295" font-size="9.5" fill="#10b981" font-weight="bold">+120 Units</text>
+  <text x="500" y="295" font-size="9.5" fill="#64748b">Initial Inventory Setup (SPC)</text>
+
+  <!-- Footer Button -->
+  <rect x="590" y="375" width="100" height="30" rx="6" fill="#0d9488"/>
+  <text x="640" y="394" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Close View</text>
+</svg>

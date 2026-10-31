@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" width="100%" height="100%" style="font-family:'Segoe UI',Inter,sans-serif;">
+  <rect width="720" height="450" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <!-- Header -->
+  <rect width="720" height="50" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="20" y="12" width="26" height="26" rx="6" fill="#ccfbf1"/>
+  <text x="33" y="30" fill="#0d9488" font-size="14" text-anchor="middle">&#10010;</text>
+  <text x="55" y="27" font-size="13" font-weight="bold" fill="#0f172a">Add New Medicine</text>
+  <text x="55" y="42" font-size="9.5" fill="#64748b">Enter drug specifications, pricing, and stock parameters</text>
+  <text x="690" y="32" font-size="16" fill="#94a3b8">&#10006;</text>
+
+  <!-- Section 1: Basic Identification -->
+  <text x="25" y="75" font-size="9.5" font-weight="bold" fill="#0d9488">BASIC IDENTIFICATION</text>
+  <line x1="25" y1="80" x2="695" y2="80" stroke="#e2e8f0"/>
+
+  <g transform="translate(25, 90)">
+    <text x="0" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">SKU / Barcode <tspan fill="#ef4444">*</tspan></text>
+    <rect x="0" y="18" width="205" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="10" y="36" font-size="10.5" fill="#0f172a">MED-8850</text>
+
+    <text x="225" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Brand Name <tspan fill="#ef4444">*</tspan></text>
+    <rect x="225" y="18" width="220" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="235" y="36" font-size="10.5" fill="#0f172a">Cefixime Oral Suspension</text>
+
+    <text x="465" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Generic Chemical <tspan fill="#ef4444">*</tspan></text>
+    <rect x="465" y="18" width="205" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="475" y="36" font-size="10.5" fill="#0f172a">Cefixime 100mg/5ml</text>
+  </g>
+
+  <!-- Section 2: Classification -->
+  <g transform="translate(25, 150)">
+    <text x="0" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Therapeutic Category <tspan fill="#ef4444">*</tspan></text>
+    <rect x="0" y="18" width="205" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="10" y="36" font-size="10" fill="#0f172a">Antibiotics &amp; Antimicrobials</text>
+
+    <text x="225" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Supplier Partner</text>
+    <rect x="225" y="18" width="220" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="235" y="36" font-size="10" fill="#0f172a">State Pharmaceuticals Corp (SPC)</text>
+
+    <text x="465" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Dosage Form <tspan fill="#ef4444">*</tspan></text>
+    <rect x="465" y="18" width="205" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="475" y="36" font-size="10" fill="#0f172a">Syrup / Suspension</text>
+  </g>
+
+  <!-- Section 3: Pricing & Inventory Control -->
+  <text x="25" y="225" font-size="9.5" font-weight="bold" fill="#0d9488">PRICING &amp; INVENTORY CONTROL (SRI LANKAN RUPEES)</text>
+  <line x1="25" y1="230" x2="695" y2="230" stroke="#e2e8f0"/>
+
+  <g transform="translate(25, 240)">
+    <text x="0" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Cost Price (Rs.) <tspan fill="#ef4444">*</tspan></text>
+    <rect x="0" y="18" width="150" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="10" y="36" font-size="10.5" fill="#0f172a">350.00</text>
+
+    <text x="170" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Selling Price (Rs.) <tspan fill="#ef4444">*</tspan></text>
+    <rect x="170" y="18" width="150" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="180" y="36" font-size="10.5" font-weight="bold" fill="#0d9488">520.00</text>
+
+    <text x="340" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Initial Stock (Units) <tspan fill="#ef4444">*</tspan></text>
+    <rect x="340" y="18" width="150" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="350" y="36" font-size="10.5" fill="#0f172a">50</text>
+
+    <text x="510" y="12" font-size="9.5" font-weight="bold" fill="#1e293b">Min Stock Alert <tspan fill="#ef4444">*</tspan></text>
+    <rect x="510" y="18" width="160" height="28" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+    <text x="520" y="36" font-size="10.5" fill="#0f172a">15</text>
+  </g>
+
+  <!-- Section 4: Rx Checkbox -->
+  <g transform="translate(25, 315)">
+    <rect x="0" y="0" width="18" height="18" rx="4" fill="#0d9488"/>
+    <text x="9" y="14" fill="#ffffff" font-size="13" font-weight="bold" text-anchor="middle">&#10004;</text>
+    <text x="28" y="14" font-size="10" font-weight="bold" fill="#b91c1c">Prescription Required (Rx): <tspan fill="#64748b" font-weight="normal">Customer must present a valid physician prescription to dispense.</tspan></text>
+  </g>
+
+  <!-- Footer -->
+  <rect y="390" width="720" height="60" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+  <rect x="470" y="405" width="80" height="30" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="510" y="424" font-size="11" fill="#475569" text-anchor="middle">Cancel</text>
+  <rect x="560" y="405" width="130" height="30" rx="6" fill="#0d9488"/>
+  <text x="625" y="424" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">&#128190; Save Drug Record</text>
+</svg>

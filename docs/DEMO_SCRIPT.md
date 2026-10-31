@@ -26,7 +26,7 @@
 
 #### **[0:00 - 0:45] 1. Introduction & Dashboard Overview**
 *(Look directly into the camera with camera turned on)*
-> "Hello everyone and respected evaluator. My name is **[Your Name]**, student index number **[Your Index Number]**, and this is my submission for the EE4207 Web Application Development Mini Project.
+> "Hello everyone and respected evaluator. My name is **K.A.H.B. Kuruppu**, student registration number **EG/2023/5700**, Department of Electrical and Information Engineering, Faculty of Engineering, University of Ruhuna, and this is my submission for the EE4207 Web Application Development Mini Project.
 > 
 > My project topic is **PharmaCare Pro**, a full-stack Pharmacy Inventory and Point of Sale Management System built using **Node.js, Express, SQLite (`better-sqlite3`), and vanilla HTML5, CSS3, and JavaScript**.
 > 
