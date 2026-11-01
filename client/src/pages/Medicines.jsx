@@ -154,11 +154,20 @@ export default function Medicines() {
     }
 
     try {
+      const payload = {
+        ...formData,
+        supplier: formData.supplier || null,
+        cost_price: Number(formData.cost_price),
+        unit_price: Number(formData.unit_price),
+        quantity_in_stock: Number(formData.quantity_in_stock),
+        min_stock_threshold: Number(formData.min_stock_threshold) || 15
+      };
+
       if (editingMedicine) {
-        await MedicineService.update(editingMedicine._id, formData);
+        await MedicineService.update(editingMedicine._id, payload);
         showToast(`Updated '${formData.name}' successfully!`);
       } else {
-        await MedicineService.create(formData);
+        await MedicineService.create(payload);
         showToast(`Created '${formData.name}' successfully!`);
       }
       setShowFormModal(false);
@@ -316,7 +325,10 @@ export default function Medicines() {
                       <div style={{ fontWeight: 700 }}>{med.name}</div>
                       <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{med.generic_name}</div>
                     </td>
-                    <td>{med.category?.name || 'Uncategorized'}</td>
+                    <td>
+                      <div>{med.category?.name || 'Uncategorized'}</div>
+                      <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{med.supplier?.name || 'Local / SPC'}</div>
+                    </td>
                     <td>{med.dosage_form} ({med.strength})</td>
                     <td><strong>Rs. {med.unit_price?.toFixed(2)}</strong></td>
                     <td>
@@ -435,7 +447,7 @@ export default function Medicines() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                   <div className="form-group">
-                    <label className="form-label">Generic Name</label>
+                    <label className="form-label">Generic Chemical Name</label>
                     <input
                       type="text"
                       className="form-control"
@@ -445,19 +457,31 @@ export default function Medicines() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Category</label>
+                    <label className="form-label">Therapeutic Category</label>
                     <select
                       className="form-select"
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       required
                     >
+                      <option value="">-- Select Category --</option>
                       {categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select>
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                  <div className="form-group">
+                    <label className="form-label">Pharmaceutical Supplier</label>
+                    <select
+                      className="form-select"
+                      value={formData.supplier}
+                      onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
+                    >
+                      <option value="">-- No Supplier (General) --</option>
+                      {suppliers.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
+                    </select>
+                  </div>
                   <div className="form-group">
                     <label className="form-label">Dosage Form</label>
                     <select
@@ -468,15 +492,22 @@ export default function Medicines() {
                       <option value="Tablet">Tablet</option>
                       <option value="Capsule">Capsule</option>
                       <option value="Syrup">Syrup</option>
-                      <option value="Inhaler">Inhaler</option>
                       <option value="Injection">Injection</option>
+                      <option value="Ointment">Ointment</option>
+                      <option value="Inhaler">Inhaler</option>
+                      <option value="Drops">Drops</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                   <div className="form-group">
-                    <label className="form-label">Strength</label>
+                    <label className="form-label">Strength / Dose</label>
                     <input
                       type="text"
                       className="form-control"
+                      placeholder="e.g. 500mg, 10ml"
                       value={formData.strength}
                       onChange={(e) => setFormData({ ...formData, strength: e.target.value })}
                       required
@@ -494,7 +525,7 @@ export default function Medicines() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '14px' }}>
                   <div className="form-group">
                     <label className="form-label">Cost Price (Rs.)</label>
                     <input
@@ -518,12 +549,23 @@ export default function Medicines() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Initial Units</label>
+                    <label className="form-label">Stock Units</label>
                     <input
                       type="number"
                       className="form-control"
                       value={formData.quantity_in_stock}
                       onChange={(e) => setFormData({ ...formData, quantity_in_stock: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Min Threshold</label>
+                    <input
+                      type="number"
+                      min="1"
+                      className="form-control"
+                      value={formData.min_stock_threshold}
+                      onChange={(e) => setFormData({ ...formData, min_stock_threshold: e.target.value })}
                       required
                     />
                   </div>
@@ -550,6 +592,17 @@ export default function Medicines() {
                       <span><strong>Prescription Required (Rx)</strong></span>
                     </label>
                   </div>
+                </div>
+
+                <div className="form-group" style={{ marginTop: '14px' }}>
+                  <label className="form-label">Description / Therapeutic Notes</label>
+                  <textarea
+                    rows="2"
+                    className="form-control"
+                    placeholder="Clinical indications, warnings, administration notes..."
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  />
                 </div>
               </div>
 

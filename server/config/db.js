@@ -5,7 +5,9 @@ const connectDB = async () => {
     const connUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/pharmacare_db';
     const conn = await mongoose.connect(connUri, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
     });
     console.log(`[MongoDB Connected] Host: ${conn.connection.host}, Database: ${conn.connection.name}`);
     return conn;

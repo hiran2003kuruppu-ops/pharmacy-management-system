@@ -1,12 +1,13 @@
 {
   "name": "pharmacy-management-system",
   "version": "1.0.0",
-  "description": "Full-stack Pharmacy Management System with SQLite database, complete CRUD, real-time search, POS billing, and analytics dashboard.",
+  "description": "PharmaCare Pro - Full-stack Pharmacy Management System (MERN Stack) with MongoDB, Express 5, React 19, and Node.js.",
   "main": "server/app.js",
   "scripts": {
     "start": "node server/app.js",
     "dev": "node server/app.js",
-    "test": "node -e \"console.log('Testing server health...'); require('./server/config/database'); console.log('Database verified successfully.');\""
+    "seed": "node seedMedicines.js",
+    "test": "node -e \"const c = require('./server/config/db'); c().then(() => { console.log('MongoDB connection verified successfully.'); process.exit(0); }).catch(e => { console.error(e); process.exit(1); });\""
   },
   "keywords": [],
   "author": "",

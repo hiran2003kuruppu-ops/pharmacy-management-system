@@ -119,39 +119,54 @@ exports.createMedicine = async (req, res) => {
       description
     } = req.body;
 
+    if (!sku || !sku.trim()) {
+      return res.status(400).json({ success: false, message: 'SKU barcode is required.' });
+    }
+    if (!name || !name.trim()) {
+      return res.status(400).json({ success: false, message: 'Medicine brand name is required.' });
+    }
+    if (!category || category === '') {
+      return res.status(400).json({ success: false, message: 'Therapeutic category is required.' });
+    }
+
+    const cPrice = Number(cost_price) || 0;
+    const uPrice = Number(unit_price) || 0;
+
     // Margin validation
-    if (Number(unit_price) < Number(cost_price)) {
+    if (uPrice < cPrice) {
       return res.status(400).json({
         success: false,
         message: 'Selling price cannot be less than cost price.'
       });
     }
 
+    const formattedSku = sku.toUpperCase().trim();
+
     // SKU check
-    const existing = await Medicine.findOne({ sku: sku.toUpperCase().trim() });
+    const existing = await Medicine.findOne({ sku: formattedSku });
     if (existing) {
       return res.status(409).json({
         success: false,
-        message: `SKU '${sku}' already exists.`
+        message: `SKU '${formattedSku}' already exists.`
       });
     }
 
     const medicine = await Medicine.create({
-      sku: sku.toUpperCase().trim(),
-      name,
-      generic_name,
+      sku: formattedSku,
+      name: name.trim(),
+      generic_name: generic_name ? generic_name.trim() : '',
       category,
-      supplier: supplier || null,
-      dosage_form,
-      strength,
-      batch_number,
-      cost_price: Number(cost_price),
-      unit_price: Number(unit_price),
-      quantity_in_stock: Number(quantity_in_stock) || 0,
-      min_stock_threshold: Number(min_stock_threshold) || 15,
+      supplier: (supplier && supplier !== '') ? supplier : null,
+      dosage_form: dosage_form || 'Tablet',
+      strength: strength ? strength.trim() : '500mg',
+      batch_number: batch_number ? batch_number.trim() : `BAT-${new Date().getFullYear()}`,
+      cost_price: cPrice,
+      unit_price: uPrice,
+      quantity_in_stock: Number(quantity_in_stock) >= 0 ? Number(quantity_in_stock) : 0,
+      min_stock_threshold: Number(min_stock_threshold) >= 1 ? Number(min_stock_threshold) : 15,
       expiry_date,
       requires_prescription: Boolean(requires_prescription),
-      description
+      description: description ? description.trim() : ''
     });
 
     const populated = await Medicine.findById(medicine._id)
@@ -166,26 +181,62 @@ exports.createMedicine = async (req, res) => {
 
 exports.updateMedicine = async (req, res) => {
   try {
-    const { cost_price, unit_price } = req.body;
+    const existing = await Medicine.findById(req.params.id);
+    if (!existing) {
+      return res.status(404).json({ success: false, message: 'Medicine not found.' });
+    }
 
-    if (cost_price !== undefined && unit_price !== undefined) {
-      if (Number(unit_price) < Number(cost_price)) {
-        return res.status(400).json({
-          success: false,
-          message: 'Selling price cannot be less than cost price.'
-        });
+    const updateData = { ...req.body };
+
+    // Handle empty supplier string safely to prevent CastError
+    if ('supplier' in updateData) {
+      if (!updateData.supplier || updateData.supplier === '') {
+        updateData.supplier = null;
       }
     }
 
+    // Handle empty category string safely
+    if (updateData.category === '') {
+      delete updateData.category;
+    }
+
+    // SKU uniqueness check if SKU is changing
+    if (updateData.sku) {
+      const formattedSku = updateData.sku.toUpperCase().trim();
+      if (formattedSku !== existing.sku) {
+        const skuConflict = await Medicine.findOne({ sku: formattedSku, _id: { $ne: req.params.id } });
+        if (skuConflict) {
+          return res.status(409).json({
+            success: false,
+            message: `SKU '${formattedSku}' is already registered to medicine '${skuConflict.name}'.`
+          });
+        }
+        updateData.sku = formattedSku;
+      }
+    }
+
+    // Price validation
+    const effectiveCost = updateData.cost_price !== undefined ? Number(updateData.cost_price) : existing.cost_price;
+    const effectivePrice = updateData.unit_price !== undefined ? Number(updateData.unit_price) : existing.unit_price;
+
+    if (effectivePrice < effectiveCost) {
+      return res.status(400).json({
+        success: false,
+        message: `Selling price (Rs. ${effectivePrice.toFixed(2)}) cannot be less than cost price (Rs. ${effectiveCost.toFixed(2)}).`
+      });
+    }
+
+    if (updateData.cost_price !== undefined) updateData.cost_price = Number(updateData.cost_price);
+    if (updateData.unit_price !== undefined) updateData.unit_price = Number(updateData.unit_price);
+    if (updateData.quantity_in_stock !== undefined) updateData.quantity_in_stock = Number(updateData.quantity_in_stock);
+    if (updateData.min_stock_threshold !== undefined) updateData.min_stock_threshold = Number(updateData.min_stock_threshold);
+    if (updateData.requires_prescription !== undefined) updateData.requires_prescription = Boolean(updateData.requires_prescription);
+
     const medicine = await Medicine.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true, runValidators: true }
     ).populate('category', 'name').populate('supplier', 'name');
-
-    if (!medicine) {
-      return res.status(404).json({ success: false, message: 'Medicine not found.' });
-    }
 
     res.status(200).json({ success: true, data: medicine });
   } catch (error) {
